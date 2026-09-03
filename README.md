@@ -21,7 +21,7 @@
 ---
 
 <div align="center">
-  <img src="docs/assets/ui-dashboard.png" alt="NAVIQ fleet overview: lifecycle emissions, fleet position and carbon intensity ratings" width="100%">
+  <img src="docs/assets/ui-dashboard.png" alt="NAVIQ dashboard: fleet KPIs, emissions by vessel, compliance gauge and fleet map" width="100%">
 </div>
 
 ---
@@ -173,8 +173,8 @@ Trained under the physics-informed loss. **5.11% MAPE** against a naive `v³` ba
 
 Temperature and transverse field decaying together across successive anneals, tunnelling
 events counted as they happen, swarm diversity collapsing as the particles converge. These
-curves are streamed over a WebSocket from the running solver — **they cannot be produced by a
-mocked backend**.
+curves are streamed over a WebSocket from the running solver and stay on screen after the run
+completes — **they cannot be produced by a mocked backend**.
 
 <img src="docs/assets/ui-solving.png" alt="Live solver telemetry: annealing schedule and swarm convergence" width="100%">
 
@@ -233,6 +233,16 @@ The Pareto front is clickable down to per-leg speed profiles, fuel selections an
 A fuel figure with its **95% interval**, the resistance decomposition behind it, and every alternative fuel costed on the same voyage.
 
 The fuel matrix puts funnel emissions beside lifecycle emissions and flags the gap — which is how **grey ammonia gets caught** looking clean while emitting more than the fuel it replaces.
+
+</td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/ui-fleet.png" alt="Fleet register with vessel particulars, CII rail and the speed-fuel curve" width="100%"></td>
+<td width="50%" valign="top">
+
+### Fleet
+
+Vessel particulars, the attained intensity on a full A–E rail, and the **speed-against-fuel curve** — the cubic law made visible, with the service speed marked. This is the shape every speed decision on the ship trades against.
 
 </td>
 </tr>
