@@ -172,7 +172,9 @@ class HybridOptimizer:
     def _optimize_speeds(self, vessel: dict, route: dict, fuel_id: str,
                          weights: np.ndarray, scales: dict,
                          shore_power_result: dict | None,
-                         progress: ProgressFn = None) -> tuple[np.ndarray, dict, dict]:
+                         progress: ProgressFn = None,
+                         progress_base: float = 0.0,
+                         progress_span: float = 0.0) -> tuple[np.ndarray, dict, dict]:
         """QPSO over the per-leg speed vector for one assigned voyage."""
         n_legs = max(1, len(route["waypoints"]) - 1)
         lower = np.full(n_legs, float(vessel["speed_min_kn"]))
@@ -196,9 +198,17 @@ class HybridOptimizer:
 
         qpso = QPSO(n_particles=self.qpso_particles, n_iterations=self.qpso_iterations,
                     seed=self.seed)
+        def qpso_progress(event: dict) -> None:
+            # The swarm reports its own 0-1 progress; rescale it into this
+            # voyage's slice of the run so the global bar stays monotonic.
+            self._emit(progress, {
+                **event,
+                "progress": progress_base + progress_span * event.get("progress", 0.0),
+            })
+
         solution = qpso.optimize(
             objective, lower, upper,
-            progress_callback=progress,
+            progress_callback=qpso_progress if progress is not None else None,
             initial_guess=np.full(n_legs, float(vessel["speed_service_kn"])),
         )
 
@@ -248,7 +258,21 @@ class HybridOptimizer:
                 n_replicas=self.qubo_replicas, n_steps=self.qubo_steps,
                 seed=None if self.seed is None else self.seed + w_idx,
             )
-            qubo_solution = annealer.solve(problem)
+            # Forward the annealer's own telemetry, not just a scenario counter.
+            # The temperature and transverse-field schedule is what the UI plots
+            # to show the anneal is real, and without this callback the chart
+            # receives nothing but the coarse per-scenario progress ticks.
+            def qubo_progress(event: dict, _idx: int = w_idx) -> None:
+                self._emit(progress, {
+                    **event,
+                    "scenario": _idx + 1,
+                    "total_scenarios": total,
+                    # Keep the global bar monotonic across scenarios rather than
+                    # letting each anneal reset it to zero.
+                    "progress": base_progress + (0.45 * event.get("progress", 0.0)) / max(total, 1),
+                })
+
+            qubo_solution = annealer.solve(problem, progress_callback=qubo_progress)
 
             assignments = [a for a in qubo_solution.assignments if a.get("type") == "assignment"]
             shore_choices = {a["vessel_id"]: a["port_id"]
@@ -273,7 +297,7 @@ class HybridOptimizer:
             vessel_by_id = {v["id"]: v for v in self.vessels}
             route_by_id = {r["id"]: r for r in self.routes}
 
-            for assignment in assignments:
+            for voyage_index, assignment in enumerate(assignments):
                 vessel = vessel_by_id[assignment["vessel_id"]]
                 route = route_by_id[assignment["route_id"]]
                 fuel_id = assignment["fuel_id"]
@@ -282,9 +306,14 @@ class HybridOptimizer:
                 sp_result = shore_matrix.get(vessel["id"], {}).get(port_id)
                 sp_selected = vessel["id"] in shore_choices
 
+                # Split the scenario's second half evenly across its voyages.
+                voyage_span = (0.45 / max(total, 1)) / max(len(assignments), 1)
                 speeds, obj_dict, detail = self._optimize_speeds(
                     vessel, route, fuel_id, weights, scales,
                     sp_result if sp_selected else sp_result,
+                    progress=progress,
+                    progress_base=base_progress + 0.45 / max(total, 1) + voyage_index * voyage_span,
+                    progress_span=voyage_span,
                 )
 
                 voyages.append({
