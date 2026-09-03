@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      NAVIQ_DATABASE_URL: sqlite:////app/app/data/naviq.db
+    volumes:
+      - naviq-data:/app/app/data
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  naviq-data:
