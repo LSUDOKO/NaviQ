@@ -4,27 +4,55 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: {
-          950: "#060F1C", 900: "#0A1628", 850: "#0D1D33",
-          800: "#12263F", 700: "#1E3A5F", 600: "#2A4E7A",
+        // Surfaces run darkest to lightest; depth is carried by value rather
+        // than by stacked shadows.
+        ink: {
+          950: "#050B14",
+          900: "#08111F",
+          850: "#0C1829",
+          800: "#112336",
+          700: "#1B3A56",
+          line: "#16293F",
+          bright: "#1F3B57",
         },
-        teal: { DEFAULT: "#00BFA6", bright: "#2DE3C8", dim: "#00806F" },
-        amber: { DEFAULT: "#F59E0B", dim: "#B45309" },
-        cii: { a: "#22C55E", b: "#84CC16", c: "#F59E0B", d: "#F97316", e: "#EF4444" },
+        signal: {
+          DEFAULT: "#00BFA6",
+          bright: "#35E8CD",
+          dim: "#00806F",
+        },
+        warn: { DEFAULT: "#F59E0B", dim: "#B45309" },
+        cii: {
+          a: "#22C55E", b: "#84CC16", c: "#F59E0B", d: "#F97316", e: "#EF4444",
+        },
+        txt: {
+          primary: "#E8EEF5",
+          secondary: "#9BADC2",
+          tertiary: "#61748C",
+          quiet: "#3E5169",
+        },
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
         mono: ["'JetBrains Mono'", "ui-monospace", "Menlo", "monospace"],
       },
+      // A modular scale at ~1.25 rather than arbitrary pixel values.
       fontSize: {
-        "2xs": ["0.6875rem", { lineHeight: "1rem" }],
+        "2xs": ["11px", { lineHeight: "1.45" }],
+        xs: ["11.5px", { lineHeight: "1.5" }],
+        sm: ["13px", { lineHeight: "1.5" }],
+        base: ["15px", { lineHeight: "1.5" }],
+        lg: ["19px", { lineHeight: "1.35" }],
+        xl: ["24px", { lineHeight: "1.2" }],
+        "2xl": ["34px", { lineHeight: "1.08" }],
+        "3xl": ["46px", { lineHeight: "1" }],
       },
-      boxShadow: {
-        panel: "inset 0 1px 0 0 rgba(45,227,200,0.06)",
-        glow: "0 0 24px -8px rgba(0,191,166,0.45)",
+      letterSpacing: {
+        tightest: "-0.035em",
+        tighter: "-0.025em",
+        tight: "-0.011em",
       },
       animation: {
-        "pulse-slow": "pulse 3s cubic-bezier(0.4,0,0.6,1) infinite",
+        "pulse-slow": "pulse 3.2s cubic-bezier(0.4,0,0.6,1) infinite",
       },
     },
   },

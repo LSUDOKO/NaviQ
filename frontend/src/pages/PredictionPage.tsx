@@ -117,7 +117,7 @@ export function PredictionPage() {
                   <option key={f} value={f}>{f}</option>
                 ))}
               </select>
-              <p className="text-2xs text-slate-600 mt-1">
+              <p className="text-2xs text-txt-quiet mt-1">
                 Only fuels this hull and engine can burn without a retrofit.
               </p>
             </div>
@@ -125,7 +125,7 @@ export function PredictionPage() {
             <div>
               <label className="label" htmlFor="speed">
                 Speed
-                <span className="metric text-slate-200 ml-2">{num(speed, 1)} kn</span>
+                <span className="metric text-txt-primary ml-2">{num(speed, 1)} kn</span>
               </label>
               <input
                 id="speed"
@@ -136,9 +136,9 @@ export function PredictionPage() {
                 value={speed}
                 onChange={(e) => setSpeed(Number(e.target.value))}
               />
-              <div className="flex justify-between text-2xs text-slate-600 mt-1 font-mono">
+              <div className="flex justify-between text-2xs text-txt-quiet mt-1 font-mono">
                 <span>{num(vessel?.speed_min_kn ?? 8, 0)}</span>
-                <span className="text-slate-500">
+                <span className="text-txt-tertiary">
                   service {num(vessel?.speed_service_kn ?? 13, 1)}
                 </span>
                 <span>{num(vessel?.speed_max_kn ?? 20, 0)}</span>
@@ -157,7 +157,7 @@ export function PredictionPage() {
                   <option key={name} value={index + 1}>{name}</option>
                 ))}
               </select>
-              <p className="text-2xs text-slate-600 mt-1">
+              <p className="text-2xs text-txt-quiet mt-1">
                 Drives the monsoon sea state on Indian Ocean routes.
               </p>
             </div>
@@ -165,7 +165,7 @@ export function PredictionPage() {
             <div>
               <label className="label" htmlFor="samples">
                 Monte Carlo passes
-                <span className="metric text-slate-200 ml-2">{samples}</span>
+                <span className="metric text-txt-primary ml-2">{samples}</span>
               </label>
               <input
                 id="samples"
@@ -176,7 +176,7 @@ export function PredictionPage() {
                 value={samples}
                 onChange={(e) => setSamples(Number(e.target.value))}
               />
-              <p className="text-2xs text-slate-600 mt-1">
+              <p className="text-2xs text-txt-quiet mt-1">
                 Dropout passes used to separate model uncertainty from sensor noise.
               </p>
             </div>
@@ -209,53 +209,53 @@ export function PredictionPage() {
                 title={`${result.vessel.name} on ${result.route.name}`}
                 subtitle={`${int(result.distance_nm)} nm at ${num(speed, 1)} kn, ${MONTHS[month - 1]} conditions`}
                 actions={
-                  <span className="chip bg-navy-800 text-slate-400 border border-navy-600">
+                  <span className="chip bg-ink-800 text-txt-secondary border border-ink-bright">
                     {result.mode === "neural" ? "Neural model" : "Physics model"}
                   </span>
                 }
               >
                 <div className="grid gap-5 sm:grid-cols-3">
                   <div>
-                    <p className="text-xs text-slate-500 mb-1.5">Fuel required</p>
+                    <p className="text-xs text-txt-tertiary mb-1.5">Fuel required</p>
                     <p className="flex items-baseline gap-1.5">
-                      <span className="metric text-3xl font-semibold text-teal">
+                      <span className="metric text-3xl font-semibold text-signal">
                         {num(result.fuel_tonnes, 1)}
                       </span>
                       <span className="text-sm unit">t</span>
                     </p>
-                    <p className="text-2xs text-slate-500 mt-1.5">
+                    <p className="text-2xs text-txt-tertiary mt-1.5">
                       ± {num(result.fuel_tonnes_std, 1)} t at one standard deviation
                     </p>
-                    <p className="text-2xs text-slate-600 mt-0.5 font-mono">
+                    <p className="text-2xs text-txt-quiet mt-0.5 font-mono">
                       95% within {num(result.confidence_interval_95[0], 1)} –{" "}
                       {num(result.confidence_interval_95[1], 1)} t
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-xs text-slate-500 mb-1.5">Bunker cost</p>
-                    <p className="metric text-3xl font-semibold text-slate-50">
+                    <p className="text-xs text-txt-tertiary mb-1.5">Bunker cost</p>
+                    <p className="metric text-3xl font-semibold text-txt-primary">
                       {usd(result.fuel_cost_usd, true)}
                     </p>
-                    <p className="text-2xs text-slate-500 mt-1.5">
+                    <p className="text-2xs text-txt-tertiary mt-1.5">
                       {duration(result.duration_hours)} at sea
                     </p>
-                    <p className="text-2xs text-slate-600 mt-0.5">
+                    <p className="text-2xs text-txt-quiet mt-0.5">
                       {power(result.average_power_kw)} average propulsive load
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-xs text-slate-500 mb-1.5">Model agreement</p>
-                    <p className="metric text-3xl font-semibold text-slate-50">
+                    <p className="text-xs text-txt-tertiary mb-1.5">Model agreement</p>
+                    <p className="metric text-3xl font-semibold text-txt-primary">
                       {pct(result.model_divergence_pct)}
                     </p>
-                    <p className="text-2xs text-slate-500 mt-1.5">
+                    <p className="text-2xs text-txt-tertiary mt-1.5">
                       Neural {num(result.neural_estimate_tonnes ?? 0, 1)} t against physics{" "}
                       {num(result.physics_estimate_tonnes, 1)} t
                     </p>
                     {result.model_info.validation_mape_pct !== undefined && (
-                      <p className="text-2xs text-slate-600 mt-0.5">
+                      <p className="text-2xs text-txt-quiet mt-0.5">
                         Validation error {pct(result.model_info.validation_mape_pct)}
                       </p>
                     )}
@@ -263,9 +263,9 @@ export function PredictionPage() {
                 </div>
 
                 {speedSaving && Math.abs(speedSaving.ratio - 1) > 0.02 && (
-                  <p className="mt-4 pt-4 border-t border-navy-700/70 text-xs text-slate-400 leading-relaxed">
+                  <p className="mt-4 pt-4 border-t border-ink-700/70 text-xs text-txt-secondary leading-relaxed">
                     At {num(speed, 1)} kn this voyage needs{" "}
-                    <span className="metric text-slate-200">
+                    <span className="metric text-txt-primary">
                       {speedSaving.faster ? `${num(1 / speedSaving.ratio, 2)}×` : `${num(1 / speedSaving.ratio, 2)}×`}
                     </span>{" "}
                     the propulsive power of the same voyage at the service speed of{" "}

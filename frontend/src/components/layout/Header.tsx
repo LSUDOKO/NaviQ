@@ -34,12 +34,12 @@ export function Header({ title, description, onMenuClick }: HeaderProps) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 bg-navy-950/85 backdrop-blur border-b border-navy-700/70">
+    <header className="sticky top-0 z-30 bg-ink-950/90 backdrop-blur-sm border-b border-ink-line">
       <div className="flex items-center gap-4 px-4 sm:px-6 py-3.5">
         <button
           type="button"
           onClick={onMenuClick}
-          className="lg:hidden text-slate-400 hover:text-teal p-1 -ml-1"
+          className="lg:hidden text-txt-secondary hover:text-signal p-1 -ml-1"
           aria-label="Open navigation"
         >
           <svg viewBox="0 0 20 20" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -48,8 +48,8 @@ export function Header({ title, description, onMenuClick }: HeaderProps) {
         </button>
 
         <div className="min-w-0 flex-1">
-          <h1 className="text-base font-semibold text-slate-50 truncate">{title}</h1>
-          <p className="text-xs text-slate-500 truncate">{description}</p>
+          <h1 className="text-base font-medium text-txt-primary truncate leading-tight">{title}</h1>
+          <p className="text-2xs text-txt-tertiary truncate mt-0.5">{description}</p>
         </div>
 
         <div className="hidden sm:flex items-center gap-2 shrink-0">
@@ -59,8 +59,8 @@ export function Header({ title, description, onMenuClick }: HeaderProps) {
               Backend offline
             </span>
           ) : (
-            <span className="chip bg-teal/10 text-teal border border-teal/25">
-              <span className="w-1.5 h-1.5 rounded-full bg-teal" aria-hidden="true" />
+            <span className="chip bg-signal/[0.08] text-signal border border-signal/25">
+              <span className="w-1.5 h-1.5 rounded-full bg-signal" aria-hidden="true" />
               {health?.predictor_mode === "neural" ? "Neural model live" : "Physics model live"}
             </span>
           )}

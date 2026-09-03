@@ -81,18 +81,23 @@ const NAV: NavItem[] = [
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <nav className="h-full flex flex-col bg-navy-900 border-r border-navy-700/70" aria-label="Main">
-      <div className="px-5 py-5 border-b border-navy-700/70">
-        <div className="flex items-baseline gap-2">
-          <span className="font-mono text-xl font-bold tracking-[0.18em] text-slate-50">NAVIQ</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-teal animate-pulse-slow" aria-hidden="true" />
+    <nav className="h-full flex flex-col bg-ink-900 border-r border-ink-line" aria-label="Main">
+      <div className="px-5 py-5 border-b border-ink-line">
+        <div className="flex items-center gap-2.5">
+          <span className="font-mono text-lg font-bold tracking-[0.2em] text-txt-primary leading-none">
+            NAVIQ
+          </span>
+          <span
+            className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse-slow"
+            aria-hidden="true"
+          />
         </div>
-        <p className="text-2xs text-slate-500 mt-1.5 leading-snug">
+        <p className="text-2xs text-txt-quiet mt-2 leading-snug">
           Green fleet intelligence
         </p>
       </div>
 
-      <ul className="flex-1 py-3 overflow-y-auto">
+      <ul className="flex-1 py-2.5 overflow-y-auto">
         {NAV.map((item) => (
           <li key={item.to}>
             <NavLink
@@ -101,21 +106,21 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               onClick={onNavigate}
               className={({ isActive }) =>
                 [
-                  "group flex items-start gap-3 px-5 py-2.5 border-l-2 transition-colors",
+                  "group flex items-start gap-3 px-5 py-2.5 border-l-2 transition-colors duration-150",
                   isActive
-                    ? "border-teal bg-navy-850 text-slate-50"
-                    : "border-transparent text-slate-400 hover:text-slate-100 hover:bg-navy-850/50",
+                    ? "border-signal bg-ink-850 text-txt-primary"
+                    : "border-transparent text-txt-secondary hover:text-txt-primary hover:bg-ink-850/60",
                 ].join(" ")
               }
             >
               {({ isActive }) => (
                 <>
-                  <span className={isActive ? "text-teal mt-0.5" : "text-slate-500 mt-0.5"}>
+                  <span className={isActive ? "text-signal mt-px" : "text-txt-quiet mt-px"}>
                     {item.icon}
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-sm font-medium">{item.label}</span>
-                    <span className="block text-2xs text-slate-600 leading-snug mt-0.5">
+                    <span className="block text-sm font-medium leading-tight">{item.label}</span>
+                    <span className="block text-2xs text-txt-quiet leading-snug mt-1">
                       {item.hint}
                     </span>
                   </span>
@@ -126,8 +131,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         ))}
       </ul>
 
-      <div className="px-5 py-4 border-t border-navy-700/70">
-        <p className="text-2xs text-slate-600 leading-relaxed">
+      <div className="px-5 py-4 border-t border-ink-line">
+        <p className="text-2xs text-txt-quiet leading-relaxed">
           Smart India Hackathon 2026
           <br />
           Problem statement SIH26138

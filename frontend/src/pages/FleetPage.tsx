@@ -53,15 +53,15 @@ export function FleetPage() {
                 onClick={() => setSelectedId(vessel.id)}
                 className={`w-full text-left px-4 py-3 border-l-2 border-b border-b-navy-800/70 transition-colors ${
                   vessel.id === selectedId
-                    ? "border-l-teal bg-navy-850"
-                    : "border-l-transparent hover:bg-navy-850/50"
+                    ? "border-l-teal bg-ink-850"
+                    : "border-l-transparent hover:bg-ink-850/50"
                 }`}
               >
                 <div className="flex items-center gap-2.5 mb-1">
                   <CIIBadge rating={vessel.rating} size="sm" />
-                  <span className="text-sm text-slate-200 truncate flex-1">{vessel.name}</span>
+                  <span className="text-sm text-txt-primary truncate flex-1">{vessel.name}</span>
                 </div>
-                <p className="text-2xs text-slate-500 ml-7">
+                <p className="text-2xs text-txt-tertiary ml-7">
                   {SHIP_TYPE_LABELS[vessel.ship_type] ?? vessel.ship_type} ·{" "}
                   {int(vessel.dwt)} DWT · {vessel.built_year}
                 </p>
@@ -93,19 +93,19 @@ export function FleetPage() {
                   { label: "Annual distance", value: int(selected.annual_distance_nm), unit: "nm" },
                 ].map((stat) => (
                   <div key={stat.label}>
-                    <p className="text-2xs text-slate-500 mb-1">{stat.label}</p>
+                    <p className="text-2xs text-txt-tertiary mb-1">{stat.label}</p>
                     <p className="flex items-baseline gap-1">
-                      <span className="metric text-base text-slate-100">{stat.value}</span>
+                      <span className="metric text-base text-txt-primary">{stat.value}</span>
                       {stat.unit && <span className="text-2xs unit">{stat.unit}</span>}
                     </p>
                   </div>
                 ))}
               </div>
 
-              <div className="pt-4 border-t border-navy-700/70">
+              <div className="pt-4 border-t border-ink-700/70">
                 <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-xs text-slate-500">Carbon intensity, 2026</span>
-                  <span className="metric text-sm text-slate-200">
+                  <span className="text-xs text-txt-tertiary">Carbon intensity, 2026</span>
+                  <span className="metric text-sm text-txt-primary">
                     {num(selected.attained_cii, 2)}{" "}
                     <span className="text-2xs unit">
                       against {num(selected.required_cii, 2)} required
@@ -119,7 +119,7 @@ export function FleetPage() {
                   rating={selected.rating}
                   size="lg"
                 />
-                <p className="text-2xs text-slate-500 mt-3 leading-relaxed">
+                <p className="text-2xs text-txt-tertiary mt-3 leading-relaxed">
                   {selected.cii.rating_description}. Headroom to the C boundary is{" "}
                   {pct(selected.cii.margin_to_c_boundary_pct)}.
                 </p>
@@ -182,7 +182,7 @@ export function FleetPage() {
                     useResizeHandler
                   />
                 )}
-                <p className="text-2xs text-slate-600 leading-relaxed mt-2">
+                <p className="text-2xs text-txt-quiet leading-relaxed mt-2">
                   The curve steepens because propulsive power rises with roughly the cube of speed
                   while distance stays fixed. This is the shape every speed decision on this ship
                   trades against.
@@ -196,15 +196,15 @@ export function FleetPage() {
                       key={fuelId}
                       className={`flex items-center justify-between px-3 py-2 rounded-sm border ${
                         fuelId === selected.current_fuel
-                          ? "border-teal/40 bg-teal/[0.06]"
-                          : "border-navy-700/60"
+                          ? "border-signal/40 bg-signal/[0.06]"
+                          : "border-ink-700/60"
                       }`}
                     >
-                      <span className="text-sm text-slate-200">
+                      <span className="text-sm text-txt-primary">
                         {FUEL_SHORT[fuelId] ?? fuelId}
                       </span>
                       {fuelId === selected.current_fuel && (
-                        <span className="chip bg-teal/12 text-teal border border-teal/30">
+                        <span className="chip bg-signal/12 text-signal border border-signal/30">
                           in use
                         </span>
                       )}
@@ -212,26 +212,26 @@ export function FleetPage() {
                   ))}
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-navy-700/70 space-y-2 text-xs">
+                <div className="mt-5 pt-4 border-t border-ink-700/70 space-y-2 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Shore power connection</span>
-                    <span className={selected.shore_power_capable ? "text-cii-a" : "text-slate-500"}>
+                    <span className="text-txt-tertiary">Shore power connection</span>
+                    <span className={selected.shore_power_capable ? "text-cii-a" : "text-txt-tertiary"}>
                       {selected.shore_power_capable ? "Fitted" : "Not fitted"}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Propulsive efficiency</span>
-                    <span className="metric text-slate-300">
+                    <span className="text-txt-tertiary">Propulsive efficiency</span>
+                    <span className="metric text-txt-secondary">
                       {num(selected.propulsive_efficiency * 100, 1)}%
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Auxiliary engines</span>
-                    <span className="metric text-slate-300">{power(selected.aux_engine_kw)}</span>
+                    <span className="text-txt-tertiary">Auxiliary engines</span>
+                    <span className="metric text-txt-secondary">{power(selected.aux_engine_kw)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Speed range</span>
-                    <span className="metric text-slate-300">
+                    <span className="text-txt-tertiary">Speed range</span>
+                    <span className="metric text-txt-secondary">
                       {num(selected.speed_min_kn, 0)} – {num(selected.speed_max_kn, 0)} kn
                     </span>
                   </div>

@@ -117,12 +117,12 @@ export function OptimizationPage() {
                       type="checkbox"
                       checked={vesselIds.includes(vessel.id)}
                       onChange={() => toggle(vesselIds, setVesselIds, vessel.id)}
-                      className="accent-teal w-3.5 h-3.5"
+                      className="accent-signal w-3.5 h-3.5"
                     />
-                    <span className="text-slate-300 group-hover:text-slate-100 transition-colors flex-1 truncate">
+                    <span className="text-txt-secondary group-hover:text-txt-primary transition-colors flex-1 truncate">
                       {vessel.name}
                     </span>
-                    <span className="metric text-2xs text-slate-600">
+                    <span className="metric text-2xs text-txt-quiet">
                       {Math.round(vessel.dwt / 1000)}k
                     </span>
                   </label>
@@ -142,12 +142,12 @@ export function OptimizationPage() {
                       type="checkbox"
                       checked={routeIds.includes(route.id)}
                       onChange={() => toggle(routeIds, setRouteIds, route.id)}
-                      className="accent-teal w-3.5 h-3.5"
+                      className="accent-signal w-3.5 h-3.5"
                     />
-                    <span className="text-slate-300 group-hover:text-slate-100 transition-colors flex-1 truncate">
+                    <span className="text-txt-secondary group-hover:text-txt-primary transition-colors flex-1 truncate">
                       {route.name}
                     </span>
-                    <span className="metric text-2xs text-slate-600">
+                    <span className="metric text-2xs text-txt-quiet">
                       {Math.round(route.cargo_demand_t / 1000)}k t
                     </span>
                   </label>
@@ -156,7 +156,7 @@ export function OptimizationPage() {
             </fieldset>
 
             {capacityWarning && (
-              <p className="text-2xs text-amber mt-4 leading-relaxed">{capacityWarning}</p>
+              <p className="text-2xs text-warn mt-4 leading-relaxed">{capacityWarning}</p>
             )}
           </Panel>
 
@@ -166,7 +166,7 @@ export function OptimizationPage() {
                 <div key={key}>
                   <label className="label flex items-baseline justify-between" htmlFor={key}>
                     <span>{OBJECTIVE_LABELS[key]}</span>
-                    <span className="metric text-slate-300">{num(weights[key] * 100, 0)}%</span>
+                    <span className="metric text-txt-secondary">{num(weights[key] * 100, 0)}%</span>
                   </label>
                   <input
                     id={key}
@@ -179,18 +179,18 @@ export function OptimizationPage() {
                       setWeights((w) => ({ ...w, [key]: Number(e.target.value) }))
                     }
                   />
-                  <p className="text-2xs text-slate-600 mt-1 leading-snug">
+                  <p className="text-2xs text-txt-quiet mt-1 leading-snug">
                     {OBJECTIVE_HINTS[key]}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-5 pt-4 border-t border-navy-700/70 space-y-4">
+            <div className="mt-5 pt-4 border-t border-ink-700/70 space-y-4">
               <div>
                 <label className="label flex items-baseline justify-between" htmlFor="lambda">
                   <span>Risk aversion</span>
-                  <span className="metric text-slate-300">λ = {num(lambda, 1)}</span>
+                  <span className="metric text-txt-secondary">λ = {num(lambda, 1)}</span>
                 </label>
                 <input
                   id="lambda"
@@ -201,7 +201,7 @@ export function OptimizationPage() {
                   value={lambda}
                   onChange={(e) => setLambda(Number(e.target.value))}
                 />
-                <p className="text-2xs text-slate-600 mt-1 leading-snug">
+                <p className="text-2xs text-txt-quiet mt-1 leading-snug">
                   How heavily to penalise a plan whose fuel burn is volatile under uncertain
                   weather. At zero, only the average matters.
                 </p>
@@ -210,7 +210,7 @@ export function OptimizationPage() {
               <div>
                 <label className="label flex items-baseline justify-between" htmlFor="nsol">
                   <span>Plans to explore</span>
-                  <span className="metric text-slate-300">{nSolutions}</span>
+                  <span className="metric text-txt-secondary">{nSolutions}</span>
                 </label>
                 <input
                   id="nsol"
@@ -302,9 +302,9 @@ export function OptimizationPage() {
                   },
                 ].map((stat) => (
                   <div key={stat.label} className="panel px-4 py-3">
-                    <p className="text-2xs text-slate-500 mb-1.5">{stat.label}</p>
-                    <p className="metric text-xl text-slate-50">{stat.value}</p>
-                    <p className="text-2xs text-slate-600 mt-1">{stat.hint}</p>
+                    <p className="text-2xs text-txt-tertiary mb-1.5">{stat.label}</p>
+                    <p className="metric text-xl text-txt-primary">{stat.value}</p>
+                    <p className="text-2xs text-txt-quiet mt-1">{stat.hint}</p>
                   </div>
                 ))}
               </section>
@@ -321,7 +321,7 @@ export function OptimizationPage() {
                   selectedId={selectedId}
                   onSelect={setSelectedId}
                 />
-                <p className="text-2xs text-slate-600 leading-relaxed mt-2">
+                <p className="text-2xs text-txt-quiet leading-relaxed mt-2">
                   Points are coloured by the worst carbon intensity rating in the plan. Hollow
                   markers are plans another plan beats on every objective at once — they are shown
                   so the shape of the frontier is visible, not because anyone would choose them.

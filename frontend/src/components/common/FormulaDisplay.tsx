@@ -37,10 +37,10 @@ export function FormulaDisplay({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="w-full panel-header hover:bg-navy-850/50 transition-colors text-left"
+        className="w-full panel-header hover:bg-ink-850/50 transition-colors text-left"
       >
         <h2 className="panel-title">{title}</h2>
-        <span className="text-slate-500 text-sm shrink-0" aria-hidden="true">
+        <span className="text-txt-tertiary text-sm shrink-0" aria-hidden="true">
           {open ? "Hide" : "Show"}
         </span>
       </button>
@@ -48,12 +48,12 @@ export function FormulaDisplay({
       {open && (
         <div className="p-4 grid gap-4 md:grid-cols-2">
           {formulas.map((formula) => (
-            <div key={formula.name} className="border border-navy-700/60 rounded-sm p-3">
-              <p className="text-sm font-medium text-slate-200 mb-1">{formula.name}</p>
-              <div className="text-teal-bright">
+            <div key={formula.name} className="border border-ink-700/60 rounded-sm p-3">
+              <p className="text-sm font-medium text-txt-primary mb-1">{formula.name}</p>
+              <div className="text-signal-bright">
                 <Rendered latex={formula.latex} />
               </div>
-              <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{formula.description}</p>
+              <p className="text-xs text-txt-tertiary mt-1.5 leading-relaxed">{formula.description}</p>
             </div>
           ))}
         </div>

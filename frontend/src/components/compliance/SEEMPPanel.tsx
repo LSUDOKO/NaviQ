@@ -30,7 +30,7 @@ export function SEEMPPanel({ vessels }: { vessels: VesselEntry[] }) {
   if (actionable.length === 0) {
     return (
       <Panel title="Corrective action" subtitle="Vessels approaching the compliance boundary">
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-txt-secondary">
           Every vessel is rated C or better. No corrective action plan is required under SEEMP
           Part III.
         </p>
@@ -47,19 +47,19 @@ export function SEEMPPanel({ vessels }: { vessels: VesselEntry[] }) {
         {actionable.map((entry) => {
           const plan = entry.seemp;
           return (
-            <article key={entry.vessel_id} className="border border-navy-700/60 rounded-sm p-4">
+            <article key={entry.vessel_id} className="border border-ink-700/60 rounded-sm p-4">
               <header className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
                 <div className="flex items-center gap-2.5">
                   <CIIBadge rating={entry.cii.rating} size="sm" />
-                  <h3 className="text-sm font-medium text-slate-100">{entry.vessel_name}</h3>
-                  <span className="text-slate-600" aria-hidden="true">→</span>
+                  <h3 className="text-sm font-medium text-txt-primary">{entry.vessel_name}</h3>
+                  <span className="text-txt-quiet" aria-hidden="true">→</span>
                   <CIIBadge rating={plan.projected_rating} size="sm" />
                 </div>
                 <span
                   className={`chip border ${
                     plan.urgency === "critical"
                       ? "bg-cii-e/12 text-cii-e border-cii-e/30"
-                      : "bg-amber/12 text-amber border-amber/30"
+                      : "bg-warn/12 text-warn border-warn/30"
                   }`}
                 >
                   {plan.urgency === "critical" ? "Immediate" : "Plan required"}
@@ -68,18 +68,18 @@ export function SEEMPPanel({ vessels }: { vessels: VesselEntry[] }) {
 
               <div className="grid gap-4 sm:grid-cols-3 mb-4">
                 <div>
-                  <p className="text-2xs text-slate-500 mb-1">Reduction needed</p>
-                  <p className="metric text-lg text-slate-100">
+                  <p className="text-2xs text-txt-tertiary mb-1">Reduction needed</p>
+                  <p className="metric text-lg text-txt-primary">
                     {pct(plan.required_reduction_pct, 1)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-2xs text-slate-500 mb-1">This bundle delivers</p>
+                  <p className="text-2xs text-txt-tertiary mb-1">This bundle delivers</p>
                   <p className="metric text-lg text-cii-a">{pct(plan.achieved_reduction_pct, 1)}</p>
                 </div>
                 <div>
-                  <p className="text-2xs text-slate-500 mb-1">Capital required</p>
-                  <p className="metric text-lg text-slate-100">
+                  <p className="text-2xs text-txt-tertiary mb-1">Capital required</p>
+                  <p className="metric text-lg text-txt-primary">
                     {plan.total_capex_usd > 0 ? usd(plan.total_capex_usd, true) : "None"}
                   </p>
                   {plan.annual_opex_delta_usd < 0 && (
@@ -94,29 +94,29 @@ export function SEEMPPanel({ vessels }: { vessels: VesselEntry[] }) {
                 {plan.recommended_measures.map((measure) => (
                   <li
                     key={measure.id}
-                    className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs border-l-2 border-teal/40 pl-3 py-0.5"
+                    className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs border-l-2 border-signal/40 pl-3 py-0.5"
                   >
-                    <span className="text-slate-200 font-medium">{measure.name}</span>
-                    <span className="chip bg-navy-800 text-slate-500 border border-navy-700">
+                    <span className="text-txt-primary font-medium">{measure.name}</span>
+                    <span className="chip bg-ink-800 text-txt-tertiary border border-ink-700">
                       {CATEGORY_LABELS[measure.category] ?? measure.category}
                     </span>
                     <span className="metric text-cii-a">−{num(measure.reduction_pct, 1)}%</span>
-                    <span className="metric text-slate-500">
+                    <span className="metric text-txt-tertiary">
                       {measure.capex_usd > 0 ? usd(measure.capex_usd, true) : "no capex"}
                     </span>
-                    <span className="text-slate-600">
+                    <span className="text-txt-quiet">
                       {measure.lead_time_days === 0
                         ? "immediate"
                         : `${int(measure.lead_time_days)} days lead`}
                     </span>
-                    <p className="w-full text-2xs text-slate-600 leading-relaxed mt-0.5">
+                    <p className="w-full text-2xs text-txt-quiet leading-relaxed mt-0.5">
                       {measure.description}
                     </p>
                   </li>
                 ))}
               </ol>
 
-              <p className="text-2xs text-slate-500 mt-4 pt-3 border-t border-navy-700/70 leading-relaxed">
+              <p className="text-2xs text-txt-tertiary mt-4 pt-3 border-t border-ink-700/70 leading-relaxed">
                 {plan.statutory_note}
               </p>
             </article>

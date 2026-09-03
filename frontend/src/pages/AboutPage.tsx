@@ -30,11 +30,11 @@ export function AboutPage() {
   return (
     <div className="max-w-4xl space-y-5">
       <Panel>
-        <p className="font-mono text-3xl font-bold tracking-[0.2em] text-slate-50 mb-2">NAVIQ</p>
-        <p className="text-base text-slate-300 mb-5">{data.subtitle}</p>
-        <p className="text-sm text-slate-400 leading-relaxed max-w-2xl">{data.innovation}</p>
+        <p className="font-mono text-3xl font-bold tracking-[0.2em] text-txt-primary mb-2">NAVIQ</p>
+        <p className="text-base text-txt-secondary mb-5">{data.subtitle}</p>
+        <p className="text-sm text-txt-secondary leading-relaxed max-w-2xl">{data.innovation}</p>
 
-        <dl className="grid gap-4 sm:grid-cols-4 mt-6 pt-5 border-t border-navy-700/70">
+        <dl className="grid gap-4 sm:grid-cols-4 mt-6 pt-5 border-t border-ink-700/70">
           {[
             ["Event", data.event],
             ["Problem statement", data.problem_statement_id],
@@ -42,8 +42,8 @@ export function AboutPage() {
             ["Organisation", data.organisation],
           ].map(([label, value]) => (
             <div key={label}>
-              <dt className="text-2xs text-slate-500 mb-1">{label}</dt>
-              <dd className="text-sm text-slate-200">{value}</dd>
+              <dt className="text-2xs text-txt-tertiary mb-1">{label}</dt>
+              <dd className="text-sm text-txt-primary">{value}</dd>
             </div>
           ))}
         </dl>
@@ -53,8 +53,8 @@ export function AboutPage() {
         <ol className="space-y-3">
           {data.differentiators.map((item, index) => (
             <li key={item} className="flex gap-3.5 text-sm">
-              <span className="metric text-xs text-teal shrink-0 pt-0.5 w-4">{index + 1}</span>
-              <span className="text-slate-300 leading-relaxed">{item}</span>
+              <span className="metric text-xs text-signal shrink-0 pt-0.5 w-4">{index + 1}</span>
+              <span className="text-txt-secondary leading-relaxed">{item}</span>
             </li>
           ))}
         </ol>
@@ -85,12 +85,12 @@ export function AboutPage() {
               },
             ].map((stat) => (
               <div key={stat.label}>
-                <p className="text-2xs text-slate-500 mb-1">{stat.label}</p>
-                <p className="metric text-lg text-slate-100">{stat.value}</p>
+                <p className="text-2xs text-txt-tertiary mb-1">{stat.label}</p>
+                <p className="metric text-lg text-txt-primary">{stat.value}</p>
               </div>
             ))}
           </div>
-          <p className="text-2xs text-slate-500 leading-relaxed mt-4 pt-4 border-t border-navy-700/70">
+          <p className="text-2xs text-txt-tertiary leading-relaxed mt-4 pt-4 border-t border-ink-700/70">
             A bidirectional LSTM with time-aware self-attention, trained under a physics-informed
             loss that penalises violations of energy conservation and cubic speed scaling.
             Uncertainty is decomposed into model ignorance, from Monte Carlo Dropout, and
@@ -102,7 +102,7 @@ export function AboutPage() {
       <Panel title="References" subtitle="The literature this implementation follows">
         <ul className="space-y-2">
           {data.references.map((reference) => (
-            <li key={reference} className="text-xs text-slate-400 leading-relaxed">
+            <li key={reference} className="text-xs text-txt-secondary leading-relaxed">
               {reference}
             </li>
           ))}

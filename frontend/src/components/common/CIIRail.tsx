@@ -71,7 +71,7 @@ export function CIIRail({
 
         {/* The required line: the regulator's threshold for this year. */}
         <div
-          className="absolute top-0 bottom-0 w-px bg-slate-100/70"
+          className="absolute top-0 bottom-0 w-px bg-txt-primary/70"
           style={{ left: `${toPct(required)}%` }}
           title={`Required ${num(required, 2)}`}
         />
@@ -81,16 +81,16 @@ export function CIIRail({
           className="absolute top-0 bottom-0 flex items-center"
           style={{ left: `${markerPct}%`, transform: "translateX(-50%)" }}
         >
-          <div className="w-1 h-full bg-navy-950" />
+          <div className="w-1 h-full bg-ink-950" />
           <div
-            className="absolute w-2.5 h-2.5 rounded-full border-2 border-navy-950"
+            className="absolute w-2.5 h-2.5 rounded-full border-2 border-ink-950"
             style={{ backgroundColor: CII_COLORS[rating] }}
           />
         </div>
       </div>
 
       {showScale && (
-        <div className="flex justify-between mt-1.5 text-2xs text-slate-600 font-mono tabular">
+        <div className="flex justify-between mt-1.5 text-2xs text-txt-quiet font-mono tabular">
           {CII_ORDER.map((grade) => (
             <span key={grade} style={{ color: grade === rating ? CII_COLORS[grade] : undefined }}>
               {grade}

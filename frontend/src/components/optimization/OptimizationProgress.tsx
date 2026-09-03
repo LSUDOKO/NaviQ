@@ -48,12 +48,12 @@ export function OptimizationProgress({
     <div className="space-y-5">
       <div>
         <div className="flex items-baseline justify-between mb-2">
-          <span className="text-xs text-slate-400">{message || "Working"}</span>
-          <span className="metric text-xs text-teal">{pct(progress * 100, 0)}</span>
+          <span className="text-xs text-txt-secondary">{message || "Working"}</span>
+          <span className="metric text-xs text-signal">{pct(progress * 100, 0)}</span>
         </div>
-        <div className="h-1.5 bg-navy-800 rounded-sm overflow-hidden">
+        <div className="h-1.5 bg-ink-800 rounded-sm overflow-hidden">
           <div
-            className="h-full bg-teal transition-all duration-300"
+            className="h-full bg-signal transition-all duration-300"
             style={{ width: `${Math.max(2, progress * 100)}%` }}
           />
         </div>
@@ -82,17 +82,17 @@ export function OptimizationProgress({
             hint: "spread of particles",
           },
         ].map((stat) => (
-          <div key={stat.label} className="border border-navy-700/60 rounded-sm px-3 py-2">
-            <p className="text-2xs text-slate-500">{stat.label}</p>
-            <p className="metric text-base text-slate-100 mt-0.5">{stat.value}</p>
-            <p className="text-2xs text-slate-600">{stat.hint}</p>
+          <div key={stat.label} className="border border-ink-700/60 rounded-sm px-3 py-2">
+            <p className="text-2xs text-txt-tertiary">{stat.label}</p>
+            <p className="metric text-base text-txt-primary mt-0.5">{stat.value}</p>
+            <p className="text-2xs text-txt-quiet">{stat.hint}</p>
           </div>
         ))}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <div>
-          <p className="text-xs text-slate-400 mb-1.5">Annealing schedule</p>
+          <p className="text-xs text-txt-secondary mb-1.5">Annealing schedule</p>
           {qubo.length > 1 ? (
             <Plot
               data={[
@@ -129,18 +129,18 @@ export function OptimizationProgress({
               useResizeHandler
             />
           ) : (
-            <div className="h-[190px] flex items-center justify-center text-2xs text-slate-600">
+            <div className="h-[190px] flex items-center justify-center text-2xs text-txt-quiet">
               Waiting for the first sweep
             </div>
           )}
-          <p className="text-2xs text-slate-600 leading-relaxed mt-1">
+          <p className="text-2xs text-txt-quiet leading-relaxed mt-1">
             Both decay together. While Γ is high the replicas roam independently and can tunnel
             through barriers; as it falls they condense onto one answer.
           </p>
         </div>
 
         <div>
-          <p className="text-xs text-slate-400 mb-1.5">Swarm convergence</p>
+          <p className="text-xs text-txt-secondary mb-1.5">Swarm convergence</p>
           {qpso.length > 1 ? (
             <Plot
               data={[
@@ -177,11 +177,11 @@ export function OptimizationProgress({
               useResizeHandler
             />
           ) : (
-            <div className="h-[190px] flex items-center justify-center text-2xs text-slate-600">
+            <div className="h-[190px] flex items-center justify-center text-2xs text-txt-quiet">
               Speed optimisation starts after the first assignment
             </div>
           )}
-          <p className="text-2xs text-slate-600 leading-relaxed mt-1">
+          <p className="text-2xs text-txt-quiet leading-relaxed mt-1">
             The objective falls as the spread collapses: particles are sampled from wells that
             tighten around the best solution found so far.
           </p>

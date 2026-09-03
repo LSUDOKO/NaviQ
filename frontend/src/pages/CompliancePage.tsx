@@ -93,12 +93,12 @@ export function CompliancePage() {
           },
         ].map((stat) => (
           <div key={stat.label} className="panel px-4 py-3.5">
-            <p className="text-xs text-slate-500 mb-2">{stat.label}</p>
+            <p className="text-xs text-txt-tertiary mb-2">{stat.label}</p>
             <p className="flex items-baseline gap-1.5">
-              <span className="metric text-2xl font-semibold text-slate-50">{stat.value}</span>
+              <span className="metric text-2xl font-semibold text-txt-primary">{stat.value}</span>
               {stat.unit && <span className="text-xs unit">{stat.unit}</span>}
             </p>
-            <p className="text-2xs text-slate-600 mt-1.5">{stat.hint}</p>
+            <p className="text-2xs text-txt-quiet mt-1.5">{stat.hint}</p>
           </div>
         ))}
       </section>
@@ -115,15 +115,15 @@ export function CompliancePage() {
                 <div className="flex items-baseline justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2.5 min-w-0">
                     <CIIBadge rating={entry.cii.rating} size="sm" />
-                    <span className="text-sm text-slate-200 truncate">{entry.vessel_name}</span>
+                    <span className="text-sm text-txt-primary truncate">{entry.vessel_name}</span>
                   </div>
                   <div className="flex items-baseline gap-3 shrink-0">
-                    <span className="metric text-xs text-slate-300">
+                    <span className="metric text-xs text-txt-secondary">
                       {num(entry.cii.attained_cii, 2)}
                     </span>
                     <span
                       className={`metric text-2xs w-14 text-right ${
-                        entry.cii.margin_to_c_boundary_pct < 5 ? "text-amber" : "text-slate-500"
+                        entry.cii.margin_to_c_boundary_pct < 5 ? "text-warn" : "text-txt-tertiary"
                       }`}
                       title="Headroom to the C boundary"
                     >
@@ -142,7 +142,7 @@ export function CompliancePage() {
               </div>
             ))}
           </div>
-          <p className="text-2xs text-slate-600 leading-relaxed mt-5 pt-4 border-t border-navy-700/70">
+          <p className="text-2xs text-txt-quiet leading-relaxed mt-5 pt-4 border-t border-ink-700/70">
             The pale vertical line on each rail is the required intensity for {year}. The
             percentage is headroom to the C boundary — the point where a rating becomes a
             regulatory problem rather than a performance one.
@@ -168,7 +168,7 @@ export function CompliancePage() {
             <div>
               <label className="label flex items-baseline justify-between" htmlFor="z">
                 <span>Reduction factor</span>
-                <span className="metric text-slate-300">
+                <span className="metric text-txt-secondary">
                   {zOverride === null ? `${num(data.reduction_factor_z_pct, 0)}% statutory` : `${num(zOverride, 0)}%`}
                 </span>
               </label>
@@ -181,14 +181,14 @@ export function CompliancePage() {
                 value={zOverride ?? data.reduction_factor_z_pct}
                 onChange={(e) => setZOverride(Number(e.target.value))}
               />
-              <p className="text-2xs text-slate-600 mt-1 leading-snug">
+              <p className="text-2xs text-txt-quiet mt-1 leading-snug">
                 The IMO tightens this every year. Push it up to see which vessels fall out of
                 compliance before they actually do.
               </p>
               {zOverride !== null && (
                 <button
                   type="button"
-                  className="text-2xs text-teal mt-1.5 hover:text-teal-bright"
+                  className="text-2xs text-signal mt-1.5 hover:text-signal-bright"
                   onClick={() => setZOverride(null)}
                 >
                   Back to statutory
@@ -199,7 +199,7 @@ export function CompliancePage() {
             <div>
               <label className="label flex items-baseline justify-between" htmlFor="speed">
                 <span>Speed change</span>
-                <span className="metric text-slate-300">
+                <span className="metric text-txt-secondary">
                   {speedDelta > 0 ? "+" : ""}{num(speedDelta, 1)} kn
                 </span>
               </label>
@@ -212,7 +212,7 @@ export function CompliancePage() {
                 value={speedDelta}
                 onChange={(e) => setSpeedDelta(Number(e.target.value))}
               />
-              <p className="text-2xs text-slate-600 mt-1 leading-snug">
+              <p className="text-2xs text-txt-quiet mt-1 leading-snug">
                 Slow steaming is the fastest lever available: propulsive power tracks roughly the
                 cube of speed.
               </p>
@@ -228,7 +228,7 @@ export function CompliancePage() {
             </button>
 
             {scenario && (
-              <div className="pt-4 border-t border-navy-700/70 space-y-2.5">
+              <div className="pt-4 border-t border-ink-700/70 space-y-2.5">
                 {(scenario.results as Array<Record<string, never>>).map((entry) => {
                   const record = entry as unknown as {
                     vessel_id: string;
@@ -240,9 +240,9 @@ export function CompliancePage() {
                   };
                   return (
                     <div key={record.vessel_id} className="flex items-center gap-2.5 text-xs">
-                      <span className="text-slate-400 flex-1 truncate">{record.vessel_name}</span>
+                      <span className="text-txt-secondary flex-1 truncate">{record.vessel_name}</span>
                       <CIIBadge rating={record.baseline.rating} size="sm" />
-                      <span className="text-slate-600" aria-hidden="true">→</span>
+                      <span className="text-txt-quiet" aria-hidden="true">→</span>
                       <CIIBadge rating={record.scenario.rating} size="sm" />
                       <span
                         className={`metric text-2xs w-14 text-right ${
@@ -311,7 +311,7 @@ export function CompliancePage() {
             style={{ width: "100%" }}
             useResizeHandler
           />
-          <p className="text-2xs text-slate-600 leading-relaxed mt-2">
+          <p className="text-2xs text-txt-quiet leading-relaxed mt-2">
             Plotted as a ratio, so one line per vessel is directly comparable. Anything above the
             dashed line is out of compliance. Every curve rises without a single operational change,
             because the denominator shrinks as the reduction factor climbs toward 2030.

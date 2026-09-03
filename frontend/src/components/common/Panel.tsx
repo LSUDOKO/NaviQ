@@ -8,9 +8,15 @@ interface PanelProps {
   children: ReactNode;
   className?: string;
   bodyClassName?: string;
+  /**
+   * Panels are not all the same kind of object. `raised` is for the thing a
+   * page is actually about, `inset` for a readout nested inside another panel,
+   * `plain` for everything else. Giving all three the same border and shadow is
+   * the tell of a template.
+   */
+  weight?: "plain" | "raised" | "inset";
 }
 
-/** An instrument panel: a bordered console face, not a floating card. */
 export function Panel({
   id,
   title,
@@ -19,14 +25,18 @@ export function Panel({
   children,
   className = "",
   bodyClassName = "p-4",
+  weight = "plain",
 }: PanelProps) {
+  const surface =
+    weight === "raised" ? "panel-raised" : weight === "inset" ? "panel-inset" : "panel";
+
   return (
-    <section id={id} className={`panel ${className}`}>
+    <section id={id} className={`${surface} ${className}`}>
       {(title || actions) && (
         <header className="panel-header">
           <div className="min-w-0">
             {title && <h2 className="panel-title truncate">{title}</h2>}
-            {subtitle && <p className="text-xs text-slate-500 mt-0.5 truncate">{subtitle}</p>}
+            {subtitle && <p className="panel-subtitle truncate">{subtitle}</p>}
           </div>
           {actions && <div className="flex items-center gap-2 shrink-0">{actions}</div>}
         </header>
