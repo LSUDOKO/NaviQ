@@ -254,15 +254,19 @@ export function OptimizationPage() {
         </div>
 
         <div className="space-y-5">
-          {optimization.running && (
+          {(optimization.running || (result && optimization.events.length > 0)) && (
             <Panel
-              title="Solving"
-              subtitle="Simulated quantum annealing for deployment, then quantum particle swarm for speed"
+              title={optimization.running ? "Solving" : "How the plans were found"}
+              subtitle={
+                optimization.running
+                  ? "Simulated quantum annealing for deployment, then quantum particle swarm for speed"
+                  : "Solver telemetry from this run: annealing schedule, tunnelling and swarm convergence"
+              }
             >
               <OptimizationProgress
                 events={optimization.events}
                 progress={optimization.progress}
-                message={optimization.latest?.message ?? "Starting"}
+                message={optimization.running ? (optimization.latest?.message ?? "Starting") : "Complete"}
               />
             </Panel>
           )}
