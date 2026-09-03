@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-navy-950 text-slate-200 font-sans antialiased;
+    /* A faint hairline grid, like a chart plotter beneath the instruments. */
+    background-image:
+      linear-gradient(rgba(45, 227, 200, 0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45, 227, 200, 0.022) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* Figures must align in columns; proportional digits make tables jitter. */
+  .tabular,
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-navy-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-navy-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-navy-600;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-teal ring-offset-2 ring-offset-navy-950;
+  }
+}
+
+@layer components {
+  /* Instrument panel: a backlit console face, not a floating card. */
+  .panel {
+    @apply bg-navy-900/70 border border-navy-700/70 rounded-sm shadow-panel backdrop-blur-sm;
+  }
+
+  .panel-header {
+    @apply flex items-center justify-between gap-3 px-4 py-2.5 border-b border-navy-700/70;
+  }
+
+  .panel-title {
+    @apply text-sm font-semibold text-slate-100;
+  }
+
+  .metric {
+    @apply font-mono tabular tracking-tight text-slate-50;
+  }
+
+  .unit {
+    @apply text-slate-500 font-normal;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm px-3.5 py-2
+           text-sm font-medium transition-colors duration-150
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-teal text-navy-950 font-semibold hover:bg-teal-bright;
+  }
+
+  .btn-ghost {
+    @apply btn border border-navy-600 text-slate-300 hover:border-teal/60 hover:text-teal;
+  }
+
+  .field {
+    @apply w-full bg-navy-950 border border-navy-700 rounded-sm px-3 py-2 text-sm
+           text-slate-100 placeholder:text-slate-600
+           focus:border-teal focus:outline-none transition-colors;
+  }
+
+  .label {
+    @apply block text-xs font-medium text-slate-400 mb-1.5;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-sm px-2 py-0.5 text-2xs font-medium;
+  }
+
+  /* Range input styled as a console slider. */
+  input[type="range"] {
+    @apply w-full h-1 rounded-full appearance-none bg-navy-700 cursor-pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    @apply appearance-none w-3.5 h-3.5 rounded-full bg-teal cursor-pointer;
+    box-shadow: 0 0 0 3px rgba(0, 191, 166, 0.18);
+  }
+  input[type="range"]::-moz-range-thumb {
+    @apply w-3.5 h-3.5 rounded-full bg-teal border-0 cursor-pointer;
+  }
+}
+
+/* Leaflet needs to inherit the console palette rather than its own light chrome. */
+.leaflet-container {
+  background: #060f1c;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Turn the light OSM raster into a dark chart-plotter surface. Inverting and
+   rotating the hue keeps landmasses and coastlines legible while dropping the
+   whole map into the navy palette the rest of the console uses. */
+.leaflet-tile-pane {
+  filter: invert(1) hue-rotate(185deg) brightness(0.92) contrast(0.88) saturate(0.55);
+}
+
+/* The overlay pane must not inherit that inversion, or the route lines and
+   vessel markers come out in their complementary colours. */
+.leaflet-overlay-pane,
+.leaflet-marker-pane,
+.leaflet-tooltip-pane,
+.leaflet-popup-pane {
+  filter: none;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #0d1d33;
+  color: #e2e8f0;
+  border-radius: 2px;
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.8);
+}
+.leaflet-popup-content {
+  margin: 10px 12px;
+  font-size: 12px;
+}
+.leaflet-control-zoom a {
+  background: #0d1d33 !important;
+  color: #94a3b8 !important;
+  border-color: #1e3a5f !important;
+}
+.leaflet-control-zoom a:hover {
+  background: #12263f !important;
+  color: #00bfa6 !important;
+}
+.leaflet-control-attribution {
+  background: rgba(6, 15, 28, 0.82) !important;
+  color: #475569 !important;
+  font-size: 10px !important;
+}
+.leaflet-control-attribution a {
+  color: #64748b !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
