@@ -1,0 +1,243 @@
+{
+  "_meta": {
+    "description": "Trade routes with navigable waypoints following real sea lanes (avoiding landmass)",
+    "cargo_demand_t": "Cargo tonnage required on this route \u2014 used as QUBO capacity constraint"
+  },
+  "routes": [
+    {
+      "id": "R001",
+      "name": "Mumbai to Singapore",
+      "origin_port": "INBOM",
+      "destination_port": "SGSIN",
+      "distance_nm": 2491.9,
+      "cargo_demand_t": 58000,
+      "eta_window_hours": [
+        131.0,
+        237.0
+      ],
+      "revenue_usd": 1850000,
+      "waypoints": [
+        {
+          "lat": 18.949,
+          "lon": 72.9525,
+          "name": "Mumbai"
+        },
+        {
+          "lat": 17.8,
+          "lon": 71.5,
+          "name": "Arabian Sea W"
+        },
+        {
+          "lat": 12.5,
+          "lon": 73.2,
+          "name": "Laccadive Sea"
+        },
+        {
+          "lat": 7.5,
+          "lon": 77.0,
+          "name": "Cape Comorin approach"
+        },
+        {
+          "lat": 5.8,
+          "lon": 81.5,
+          "name": "S of Sri Lanka"
+        },
+        {
+          "lat": 5.0,
+          "lon": 88.0,
+          "name": "Bay of Bengal S"
+        },
+        {
+          "lat": 5.2,
+          "lon": 94.5,
+          "name": "N Sumatra"
+        },
+        {
+          "lat": 3.5,
+          "lon": 99.5,
+          "name": "Malacca Strait N"
+        },
+        {
+          "lat": 1.8,
+          "lon": 102.5,
+          "name": "Malacca Strait S"
+        },
+        {
+          "lat": 1.2644,
+          "lon": 103.82,
+          "name": "Singapore"
+        }
+      ]
+    },
+    {
+      "id": "R002",
+      "name": "Chennai to Colombo",
+      "origin_port": "INMAA",
+      "destination_port": "LKCMB",
+      "distance_nm": 517.2,
+      "cargo_demand_t": 24000,
+      "eta_window_hours": [
+        27.0,
+        49.0
+      ],
+      "revenue_usd": 420000,
+      "waypoints": [
+        {
+          "lat": 13.1,
+          "lon": 80.3,
+          "name": "Chennai"
+        },
+        {
+          "lat": 11.5,
+          "lon": 80.8,
+          "name": "Coromandel Coast"
+        },
+        {
+          "lat": 9.2,
+          "lon": 81.2,
+          "name": "Palk Bay approach"
+        },
+        {
+          "lat": 7.5,
+          "lon": 81.0,
+          "name": "E of Sri Lanka"
+        },
+        {
+          "lat": 5.9,
+          "lon": 80.2,
+          "name": "Dondra Head"
+        },
+        {
+          "lat": 6.95,
+          "lon": 79.84,
+          "name": "Colombo"
+        }
+      ]
+    },
+    {
+      "id": "R003",
+      "name": "Mundra to Fujairah",
+      "origin_port": "INMUN",
+      "destination_port": "AEFJR",
+      "distance_nm": 777.0,
+      "cargo_demand_t": 76000,
+      "eta_window_hours": [
+        41.0,
+        74.0
+      ],
+      "revenue_usd": 680000,
+      "waypoints": [
+        {
+          "lat": 22.839,
+          "lon": 69.722,
+          "name": "Mundra"
+        },
+        {
+          "lat": 22.0,
+          "lon": 68.0,
+          "name": "Gulf of Kutch"
+        },
+        {
+          "lat": 23.0,
+          "lon": 64.5,
+          "name": "Arabian Sea N"
+        },
+        {
+          "lat": 24.2,
+          "lon": 60.5,
+          "name": "Off Gwadar"
+        },
+        {
+          "lat": 25.0,
+          "lon": 57.5,
+          "name": "Gulf of Oman"
+        },
+        {
+          "lat": 25.112,
+          "lon": 56.339,
+          "name": "Fujairah"
+        }
+      ]
+    },
+    {
+      "id": "R004",
+      "name": "Visakhapatnam to Yokohama",
+      "origin_port": "INVTZ",
+      "destination_port": "JPYOK",
+      "distance_nm": 4460.5,
+      "cargo_demand_t": 44000,
+      "eta_window_hours": [
+        235.0,
+        425.0
+      ],
+      "revenue_usd": 2640000,
+      "waypoints": [
+        {
+          "lat": 17.6868,
+          "lon": 83.2185,
+          "name": "Visakhapatnam"
+        },
+        {
+          "lat": 15.0,
+          "lon": 86.0,
+          "name": "Bay of Bengal"
+        },
+        {
+          "lat": 8.0,
+          "lon": 93.0,
+          "name": "Andaman Sea approach"
+        },
+        {
+          "lat": 5.5,
+          "lon": 96.5,
+          "name": "N Sumatra"
+        },
+        {
+          "lat": 2.5,
+          "lon": 101.5,
+          "name": "Malacca Strait"
+        },
+        {
+          "lat": 1.2644,
+          "lon": 103.82,
+          "name": "Singapore Strait"
+        },
+        {
+          "lat": 5.0,
+          "lon": 106.5,
+          "name": "S China Sea S"
+        },
+        {
+          "lat": 13.0,
+          "lon": 112.0,
+          "name": "S China Sea C"
+        },
+        {
+          "lat": 20.5,
+          "lon": 118.0,
+          "name": "Luzon Strait W"
+        },
+        {
+          "lat": 25.0,
+          "lon": 123.0,
+          "name": "E China Sea"
+        },
+        {
+          "lat": 30.0,
+          "lon": 128.5,
+          "name": "Osumi Strait approach"
+        },
+        {
+          "lat": 33.5,
+          "lon": 135.0,
+          "name": "Kii Channel"
+        },
+        {
+          "lat": 35.45,
+          "lon": 139.66,
+          "name": "Yokohama"
+        }
+      ]
+    }
+  ]
+}

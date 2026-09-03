@@ -1,0 +1,181 @@
+{
+  "_meta": {
+    "description": "IMO Carbon Intensity Indicator reference lines, reduction factors and rating boundaries",
+    "sources": [
+      "MEPC.353(78) - 2022 Guidelines on the reference lines for use with operational CII (G2)",
+      "MEPC.338(76) / MEPC.354(78) - 2022 Guidelines on the operational CII reduction factors (G3)",
+      "MEPC.354(78) - 2022 Guidelines on the operational CII rating of ships (G4)"
+    ],
+    "reference_line_formula": "CII_ref = a * Capacity^(-c)",
+    "required_formula": "CII_required = CII_ref * (1 - Z/100)",
+    "rating_formula": "boundaries dd1..dd4 are multipliers applied to CII_required",
+    "units": "gCO2 per tonne-nautical mile (AER) or gCO2 per unit-transport-work"
+  },
+  "reduction_factors_z_pct": {
+    "2019": 0.0,
+    "2020": 1.0,
+    "2021": 2.0,
+    "2022": 3.0,
+    "2023": 5.0,
+    "2024": 7.0,
+    "2025": 9.0,
+    "2026": 11.0,
+    "2027": 13.0,
+    "2028": 15.0,
+    "2029": 17.0,
+    "2030": 19.0
+  },
+  "ship_types": [
+    {
+      "id": "bulk_carrier",
+      "name": "Bulk Carrier",
+      "metric": "AER",
+      "capacity_basis": "DWT",
+      "capacity_cap": 279000,
+      "a": 4745.0,
+      "c": 0.622,
+      "dd": [
+        0.86,
+        0.94,
+        1.06,
+        1.18
+      ]
+    },
+    {
+      "id": "gas_carrier",
+      "name": "Gas Carrier",
+      "metric": "AER",
+      "capacity_basis": "DWT",
+      "capacity_threshold": 65000,
+      "a": 63210810514.8,
+      "c": 2.071,
+      "a_below": 8104.0,
+      "c_below": 0.639,
+      "dd": [
+        0.81,
+        0.91,
+        1.12,
+        1.44
+      ],
+      "notes": "a derived for C0 continuity with the below-threshold branch at 65000 DWT, per MEPC.353(78) piecewise structure."
+    },
+    {
+      "id": "tanker",
+      "name": "Tanker",
+      "metric": "AER",
+      "capacity_basis": "DWT",
+      "a": 5247.0,
+      "c": 0.61,
+      "dd": [
+        0.82,
+        0.93,
+        1.08,
+        1.28
+      ]
+    },
+    {
+      "id": "container_ship",
+      "name": "Container Ship",
+      "metric": "AER",
+      "capacity_basis": "DWT",
+      "a": 1984.0,
+      "c": 0.489,
+      "dd": [
+        0.83,
+        0.94,
+        1.07,
+        1.19
+      ]
+    },
+    {
+      "id": "general_cargo",
+      "name": "General Cargo Ship",
+      "metric": "AER",
+      "capacity_basis": "DWT",
+      "capacity_threshold": 20000,
+      "a": 31948.0,
+      "c": 0.792,
+      "a_below": 588.0,
+      "c_below": 0.3885,
+      "dd": [
+        0.83,
+        0.94,
+        1.06,
+        1.19
+      ]
+    },
+    {
+      "id": "refrigerated_cargo",
+      "name": "Refrigerated Cargo Carrier",
+      "metric": "AER",
+      "capacity_basis": "DWT",
+      "a": 4600.0,
+      "c": 0.557,
+      "dd": [
+        0.78,
+        0.91,
+        1.07,
+        1.2
+      ]
+    },
+    {
+      "id": "lng_carrier",
+      "name": "LNG Carrier",
+      "metric": "AER",
+      "capacity_basis": "DWT",
+      "capacity_threshold": 100000,
+      "a": 9.827,
+      "c": 0.0,
+      "a_below": 227730372252402.5,
+      "c_below": 2.673,
+      "dd": [
+        0.89,
+        0.98,
+        1.06,
+        1.13
+      ],
+      "notes": "a_below derived for C0 continuity with the >=100000 DWT branch (a=9.827, c=0) at the 100000 DWT threshold, per MEPC.353(78) structure."
+    },
+    {
+      "id": "ro_ro_cargo",
+      "name": "Ro-Ro Cargo Ship",
+      "metric": "AER",
+      "capacity_basis": "DWT",
+      "a": 5739.0,
+      "c": 0.631,
+      "dd": [
+        0.86,
+        0.94,
+        1.06,
+        1.16
+      ]
+    }
+  ],
+  "rating_labels": {
+    "A": {
+      "label": "A",
+      "description": "Major superior performance",
+      "color": "#22C55E"
+    },
+    "B": {
+      "label": "B",
+      "description": "Minor superior performance",
+      "color": "#84CC16"
+    },
+    "C": {
+      "label": "C",
+      "description": "Moderate performance",
+      "color": "#F59E0B"
+    },
+    "D": {
+      "label": "D",
+      "description": "Minor inferior - corrective plan required after 3 consecutive years",
+      "color": "#F97316"
+    },
+    "E": {
+      "label": "E",
+      "description": "Inferior - corrective action plan required immediately",
+      "color": "#EF4444"
+    }
+  }
+}

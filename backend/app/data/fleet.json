@@ -1,0 +1,60 @@
+{
+  "_meta": { "description": "Demo fleet — 5 vessels representative of Indian Ocean trade" },
+  "vessels": [
+    {
+      "id": "V001", "name": "MV Pacific Voyager", "imo": "9845123", "flag": "India",
+      "ship_type": "bulk_carrier", "dwt": 82000, "gross_tonnage": 44500,
+      "length_m": 229.0, "beam_m": 32.3, "draft_design_m": 14.4, "block_coefficient": 0.845,
+      "wetted_surface_m2": 11200, "frontal_area_m2": 980,
+      "speed_min_kn": 10.0, "speed_max_kn": 15.0, "speed_service_kn": 13.5,
+      "main_engine_kw": 9500, "aux_engine_kw": 1800, "propulsive_efficiency": 0.68,
+      "current_fuel": "HFO", "compatible_fuels": ["HFO", "VLSFO", "MGO"],
+      "shore_power_capable": false,
+      "built_year": 2012, "annual_distance_nm": 62000
+    },
+    {
+      "id": "V002", "name": "MV Green Horizon", "imo": "9902781", "flag": "India",
+      "ship_type": "container_ship", "dwt": 65000, "gross_tonnage": 58900,
+      "length_m": 260.0, "beam_m": 32.2, "draft_design_m": 12.5, "block_coefficient": 0.652,
+      "wetted_surface_m2": 12400, "frontal_area_m2": 1450,
+      "speed_min_kn": 12.0, "speed_max_kn": 22.0, "speed_service_kn": 18.0,
+      "main_engine_kw": 25000, "aux_engine_kw": 3600, "propulsive_efficiency": 0.71,
+      "current_fuel": "VLSFO", "compatible_fuels": ["VLSFO", "MGO", "MEOH_GREY", "MEOH_GREEN"],
+      "shore_power_capable": true,
+      "built_year": 2021, "annual_distance_nm": 98000
+    },
+    {
+      "id": "V003", "name": "MV Coral Breeze", "imo": "9776430", "flag": "Singapore",
+      "ship_type": "tanker", "dwt": 120000, "gross_tonnage": 65200,
+      "length_m": 250.0, "beam_m": 44.0, "draft_design_m": 15.1, "block_coefficient": 0.822,
+      "wetted_surface_m2": 15800, "frontal_area_m2": 1120,
+      "speed_min_kn": 10.0, "speed_max_kn": 15.0, "speed_service_kn": 13.0,
+      "main_engine_kw": 13500, "aux_engine_kw": 2400, "propulsive_efficiency": 0.69,
+      "current_fuel": "HFO", "compatible_fuels": ["HFO", "VLSFO", "MGO", "NH3_GREY", "NH3_GREEN"],
+      "shore_power_capable": true,
+      "built_year": 2016, "annual_distance_nm": 71000
+    },
+    {
+      "id": "V004", "name": "MV Arctic Pioneer", "imo": "9865512", "flag": "Marshall Islands",
+      "ship_type": "lng_carrier", "dwt": 95000, "gross_tonnage": 113000,
+      "length_m": 295.0, "beam_m": 46.4, "draft_design_m": 11.9, "block_coefficient": 0.745,
+      "wetted_surface_m2": 18600, "frontal_area_m2": 1680,
+      "speed_min_kn": 13.0, "speed_max_kn": 19.5, "speed_service_kn": 17.0,
+      "main_engine_kw": 29000, "aux_engine_kw": 4200, "propulsive_efficiency": 0.72,
+      "current_fuel": "LNG", "compatible_fuels": ["LNG", "MGO", "VLSFO"],
+      "shore_power_capable": true,
+      "built_year": 2020, "annual_distance_nm": 105000
+    },
+    {
+      "id": "V005", "name": "MV Sagar Shakti", "imo": "9712209", "flag": "India",
+      "ship_type": "general_cargo", "dwt": 28000, "gross_tonnage": 19800,
+      "length_m": 175.0, "beam_m": 27.8, "draft_design_m": 10.2, "block_coefficient": 0.768,
+      "wetted_surface_m2": 6400, "frontal_area_m2": 620,
+      "speed_min_kn": 9.0, "speed_max_kn": 14.0, "speed_service_kn": 12.0,
+      "main_engine_kw": 6200, "aux_engine_kw": 1100, "propulsive_efficiency": 0.66,
+      "current_fuel": "VLSFO", "compatible_fuels": ["VLSFO", "MGO", "HFO"],
+      "shore_power_capable": false,
+      "built_year": 2009, "annual_distance_nm": 45000
+    }
+  ]
+}

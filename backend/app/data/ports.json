@@ -1,0 +1,65 @@
+{
+  "_meta": {
+    "description": "Ports with onshore power supply (OPS / cold ironing) availability",
+    "shore_power_status": "available | planned | unavailable",
+    "sources": ["IAPH World Ports Sustainability Program OPS inventory", "EU AFIR Art.9 OPS mandate 2030", "Indian Ports Association Harit Sagar guidelines 2023"]
+  },
+  "ports": [
+    {
+      "id": "INBOM", "name": "Mumbai (Jawaharlal Nehru)", "country": "India",
+      "lat": 18.9490, "lon": 72.9525,
+      "shore_power": "planned", "shore_power_kw": 4500,
+      "electricity_usd_per_kwh": 0.12, "grid_ci_gco2_per_kwh": 632,
+      "berth_fee_usd_per_day": 8500, "notes": "Harit Sagar green port initiative; OPS commissioning targeted 2027."
+    },
+    {
+      "id": "SGSIN", "name": "Singapore", "country": "Singapore",
+      "lat": 1.2644, "lon": 103.8200,
+      "shore_power": "available", "shore_power_kw": 6000,
+      "electricity_usd_per_kwh": 0.15, "grid_ci_gco2_per_kwh": 408,
+      "berth_fee_usd_per_day": 12000, "notes": "MPA green port program; OPS at Tuas and Pasir Panjang terminals."
+    },
+    {
+      "id": "AEFJR", "name": "Fujairah", "country": "United Arab Emirates",
+      "lat": 25.1120, "lon": 56.3390,
+      "shore_power": "unavailable", "shore_power_kw": 0,
+      "electricity_usd_per_kwh": 0.09, "grid_ci_gco2_per_kwh": 490,
+      "berth_fee_usd_per_day": 7200, "notes": "World's second largest bunkering hub. No OPS infrastructure."
+    },
+    {
+      "id": "JPYOK", "name": "Yokohama", "country": "Japan",
+      "lat": 35.4500, "lon": 139.6600,
+      "shore_power": "available", "shore_power_kw": 7500,
+      "electricity_usd_per_kwh": 0.18, "grid_ci_gco2_per_kwh": 462,
+      "berth_fee_usd_per_day": 14500, "notes": "Carbon neutral port program; OPS at Daikoku and Honmoku piers."
+    },
+    {
+      "id": "LKCMB", "name": "Colombo", "country": "Sri Lanka",
+      "lat": 6.9500, "lon": 79.8400,
+      "shore_power": "unavailable", "shore_power_kw": 0,
+      "electricity_usd_per_kwh": 0.11, "grid_ci_gco2_per_kwh": 528,
+      "berth_fee_usd_per_day": 6800, "notes": "South Asia transshipment hub. OPS under feasibility study."
+    },
+    {
+      "id": "INMUN", "name": "Mundra", "country": "India",
+      "lat": 22.8390, "lon": 69.7220,
+      "shore_power": "planned", "shore_power_kw": 3200,
+      "electricity_usd_per_kwh": 0.10, "grid_ci_gco2_per_kwh": 632,
+      "berth_fee_usd_per_day": 7800, "notes": "India's largest commercial port. Adani green energy tie-in lowers effective grid CI."
+    },
+    {
+      "id": "INMAA", "name": "Chennai", "country": "India",
+      "lat": 13.1000, "lon": 80.3000,
+      "shore_power": "planned", "shore_power_kw": 2800,
+      "electricity_usd_per_kwh": 0.11, "grid_ci_gco2_per_kwh": 632,
+      "berth_fee_usd_per_day": 6500, "notes": "Major east coast port under Sagarmala modernisation."
+    },
+    {
+      "id": "INVTZ", "name": "Visakhapatnam", "country": "India",
+      "lat": 17.6868, "lon": 83.2185,
+      "shore_power": "planned", "shore_power_kw": 3000,
+      "electricity_usd_per_kwh": 0.10, "grid_ci_gco2_per_kwh": 632,
+      "berth_fee_usd_per_day": 6900, "notes": "Deepest port on India's east coast; bulk and general cargo."
+    }
+  ]
+}
