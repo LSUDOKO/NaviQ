@@ -1,3 +1,4 @@
+import { chart } from "../utils/chartTheme";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Plot from "react-plotly.js";
@@ -140,9 +141,9 @@ export function FleetPage() {
                         type: "scatter",
                         mode: "lines",
                         name: "Fuel",
-                        line: { color: "#00BFA6", width: 2.5, shape: "spline" },
+                        line: { color: chart.accent, width: 2.5, shape: "spline" },
                         fill: "tozeroy",
-                        fillcolor: "rgba(0,191,166,0.09)",
+                        fillcolor: chart.accentFill,
                         hovertemplate: "%{x:.1f} kn: %{y:.1f} t per 1000 nm<extra></extra>",
                       },
                       {
@@ -158,7 +159,7 @@ export function FleetPage() {
                         type: "scatter",
                         mode: "markers",
                         name: "Service speed",
-                        marker: { size: 11, color: "#F59E0B", symbol: "diamond" },
+                        marker: { size: 11, color: chart.amber, symbol: "diamond" },
                         hovertemplate: "Service speed<extra></extra>",
                       },
                     ]}
@@ -166,16 +167,16 @@ export function FleetPage() {
                       autosize: true,
                       height: 270,
                       margin: { l: 58, r: 16, t: 10, b: 42 },
-                      paper_bgcolor: "transparent",
-                      plot_bgcolor: "transparent",
-                      font: { color: "#94A3B8", size: 11, family: "Inter, sans-serif" },
-                      xaxis: { title: { text: "Speed (kn)", font: { size: 11 } }, gridcolor: "#12263F" },
+                      paper_bgcolor: chart.paper,
+                      plot_bgcolor: chart.paper,
+                      font: { color: "#6B7280", size: 11, family: "Inter, sans-serif" },
+                      xaxis: { title: { text: "Speed (kn)", font: { size: 11 } }, gridcolor: chart.grid },
                       yaxis: {
                         title: { text: "Tonnes per 1000 nm", font: { size: 11 } },
-                        gridcolor: "#12263F",
+                        gridcolor: chart.grid,
                       },
                       showlegend: false,
-                      hoverlabel: { bgcolor: "#0D1D33", bordercolor: "#1E3A5F", font: { size: 11 } },
+                      hoverlabel: chart.hover,
                     }}
                     config={{ displayModeBar: false, responsive: true }}
                     style={{ width: "100%" }}

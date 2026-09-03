@@ -1,3 +1,4 @@
+import { chart } from "../utils/chartTheme";
 import { useState } from "react";
 import Plot from "react-plotly.js";
 import { CIIBadge, CIIRail } from "../components/common/CIIRail";
@@ -276,7 +277,7 @@ export function CompliancePage() {
                 name: vessel.vessel_name,
                 line: {
                   width: 2,
-                  color: ["#00BFA6", "#38BDF8", "#F59E0B", "#A855F7", "#84CC16"][index % 5],
+                  color: [chart.accent, chart.sky, chart.amber, chart.violet, "#65A30D"][index % 5],
                 },
                 marker: { size: 5 },
                 hovertemplate: `<b>${vessel.vessel_name}</b><br>%{x}: %{y:.2f}× required<extra></extra>`,
@@ -287,7 +288,7 @@ export function CompliancePage() {
                 type: "scatter" as const,
                 mode: "lines" as const,
                 name: "C boundary",
-                line: { color: "#EF4444", width: 1.5, dash: "dash" },
+                line: { color: chart.red, width: 1.5, dash: "dash" },
                 hovertemplate: "Compliance limit<extra></extra>",
               },
             ]}
@@ -295,17 +296,17 @@ export function CompliancePage() {
               autosize: true,
               height: 320,
               margin: { l: 62, r: 18, t: 12, b: 44 },
-              paper_bgcolor: "transparent",
-              plot_bgcolor: "transparent",
-              font: { color: "#94A3B8", size: 11, family: "Inter, sans-serif" },
-              xaxis: { title: { text: "Year", font: { size: 11 } }, gridcolor: "#12263F", dtick: 1 },
+              paper_bgcolor: chart.paper,
+              plot_bgcolor: chart.paper,
+              font: { color: "#6B7280", size: 11, family: "Inter, sans-serif" },
+              xaxis: { title: { text: "Year", font: { size: 11 } }, gridcolor: chart.grid, dtick: 1 },
               yaxis: {
                 title: { text: "Attained ÷ required", font: { size: 11 } },
-                gridcolor: "#12263F",
-                zerolinecolor: "#1E3A5F",
+                gridcolor: chart.grid,
+                zerolinecolor: chart.zero,
               },
               legend: { orientation: "h", y: -0.2, font: { size: 10 } },
-              hoverlabel: { bgcolor: "#0D1D33", bordercolor: "#1E3A5F", font: { size: 11 } },
+              hoverlabel: chart.hover,
             }}
             config={{ displayModeBar: false, responsive: true }}
             style={{ width: "100%" }}

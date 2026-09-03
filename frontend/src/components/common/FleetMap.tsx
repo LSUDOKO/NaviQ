@@ -29,8 +29,8 @@ function speedColor(speed: number, min: number, max: number): string {
   // Slow is teal (efficient), fast is amber (expensive). The ramp makes an
   // optimised speed profile legible at a glance along the track.
   const t = Math.max(0, Math.min(1, (speed - min) / Math.max(max - min, 1e-6)));
-  const from = [0, 191, 166];
-  const to = [245, 158, 11];
+  const from = [37, 99, 235];
+  const to = [217, 119, 6];
   const mix = from.map((c, i) => Math.round(c + (to[i] - c) * t));
   return `rgb(${mix.join(",")})`;
 }
@@ -112,7 +112,7 @@ export function FleetMap({
             key={route.id}
             positions={positions(route.waypoints)}
             pathOptions={{
-              color: dimmed ? "#1E3A5F" : "#00BFA6",
+              color: dimmed ? "#C4C9D4" : "#2563EB",
               weight: dimmed ? 1.5 : 2.5,
               opacity: dimmed ? 0.35 : 0.75,
               dashArray: dimmed ? "4 6" : undefined,
@@ -135,7 +135,7 @@ export function FleetMap({
             ? "#22C55E"
             : port.shore_power === "planned"
               ? "#F59E0B"
-              : "#64748B";
+              : "#9CA3AF";
         return (
           <CircleMarker
             key={port.id}
@@ -167,7 +167,7 @@ export function FleetMap({
             pathOptions={{
               color: CII_COLORS[vessel.rating],
               fillColor: CII_COLORS[vessel.rating],
-              fillOpacity: 0.85,
+              fillOpacity: 0.95,
               weight: 2,
             }}
           >

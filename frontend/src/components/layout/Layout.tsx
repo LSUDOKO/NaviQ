@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 
 const PAGE_META: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Fleet overview",
+    title: "Overview",
     description: "Carbon intensity, emissions and position across the fleet",
   },
   "/prediction": {
@@ -44,18 +44,18 @@ export function Layout() {
 
   return (
     <div className="h-full flex">
-      <aside className="hidden lg:block w-60 shrink-0">
+      <aside className="hidden lg:block w-[248px] shrink-0">
         <Sidebar />
       </aside>
 
       {drawerOpen && (
         <>
           <div
-            className="lg:hidden fixed inset-0 bg-ink-950/85 z-40"
+            className="lg:hidden fixed inset-0 bg-black/30 z-40"
             onClick={() => setDrawerOpen(false)}
             aria-hidden="true"
           />
-          <aside className="lg:hidden fixed inset-y-0 left-0 w-60 z-50">
+          <aside className="lg:hidden fixed inset-y-0 left-0 w-[248px] z-50">
             <Sidebar onNavigate={() => setDrawerOpen(false)} />
           </aside>
         </>
@@ -63,7 +63,7 @@ export function Layout() {
 
       <div className="flex-1 min-w-0 flex flex-col h-full overflow-hidden">
         <Header title={meta.title} description={meta.description} onMenuClick={() => setDrawerOpen(true)} />
-        <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-5 max-w-[1600px] w-full">
+        <main className="flex-1 overflow-y-auto px-5 sm:px-7 py-6 w-full">
           <Outlet />
         </main>
       </div>

@@ -1,3 +1,4 @@
+import { chart } from "../../utils/chartTheme";
 import Plot from "react-plotly.js";
 import type { PredictionLeg, WeatherLeg } from "../../types";
 
@@ -43,8 +44,8 @@ export function UncertaintyChart({ legs, weather }: UncertaintyChartProps) {
                 x: [...x, ...[...x].reverse()],
                 y: [...upper, ...[...lower].reverse()],
                 fill: "toself" as const,
-                fillcolor: "rgba(0,191,166,0.16)",
-                line: { color: "transparent" },
+                fillcolor: chart.accentFill,
+                line: { color: chart.paper },
                 hoverinfo: "skip" as const,
                 showlegend: true,
                 name: "95% interval",
@@ -57,8 +58,8 @@ export function UncertaintyChart({ legs, weather }: UncertaintyChartProps) {
           y: mean,
           type: "scatter" as const,
           mode: "lines+markers" as const,
-          line: { color: "#00BFA6", width: 2.5, shape: "spline" as const },
-          marker: { size: 6, color: "#2DE3C8" },
+          line: { color: chart.accent, width: 2.5, shape: "spline" as const },
+          marker: { size: 6, color: chart.accent },
           name: "Predicted rate",
           text: hover,
           hovertemplate: "%{text}<extra></extra>",
@@ -68,22 +69,22 @@ export function UncertaintyChart({ legs, weather }: UncertaintyChartProps) {
         autosize: true,
         height: 260,
         margin: { l: 56, r: 14, t: 10, b: 40 },
-        paper_bgcolor: "transparent",
-        plot_bgcolor: "transparent",
-        font: { color: "#94A3B8", size: 11, family: "Inter, sans-serif" },
+        paper_bgcolor: chart.paper,
+        plot_bgcolor: chart.paper,
+        font: { color: "#6B7280", size: 11, family: "Inter, sans-serif" },
         xaxis: {
           title: { text: "Voyage leg", font: { size: 11 } },
-          gridcolor: "#12263F",
-          zerolinecolor: "#1E3A5F",
+          gridcolor: chart.grid,
+          zerolinecolor: chart.zero,
           dtick: 1,
         },
         yaxis: {
           title: { text: "Fuel rate (kg/h)", font: { size: 11 } },
-          gridcolor: "#12263F",
-          zerolinecolor: "#1E3A5F",
+          gridcolor: chart.grid,
+          zerolinecolor: chart.zero,
         },
         legend: { orientation: "h", y: -0.24, font: { size: 10 } },
-        hoverlabel: { bgcolor: "#0D1D33", bordercolor: "#1E3A5F", font: { size: 11 } },
+        hoverlabel: chart.hover,
       }}
       config={{ displayModeBar: false, responsive: true }}
       style={{ width: "100%" }}

@@ -28,7 +28,7 @@ export function Panel({
   weight = "plain",
 }: PanelProps) {
   const surface =
-    weight === "raised" ? "panel-raised" : weight === "inset" ? "panel-inset" : "panel";
+    weight === "inset" ? "panel-inset" : "panel";
 
   return (
     <section id={id} className={`${surface} ${className}`}>

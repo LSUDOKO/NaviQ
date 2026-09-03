@@ -1,3 +1,4 @@
+import { chart } from "../../utils/chartTheme";
 import Plot from "react-plotly.js";
 import type { OptimizationProgressEvent } from "../../types";
 import { num, pct } from "../../utils/formatters";
@@ -28,8 +29,8 @@ export function OptimizationProgress({
   const totalTunneling = qubo.reduce((sum, e) => sum + (e.tunneling_events ?? 0), 0);
 
   const axis = {
-    gridcolor: "#12263F",
-    zerolinecolor: "#1E3A5F",
+    gridcolor: chart.grid,
+    zerolinecolor: chart.zero,
     titlefont: { size: 10 },
     tickfont: { size: 9 },
   };
@@ -37,11 +38,11 @@ export function OptimizationProgress({
     autosize: true,
     height: 190,
     margin: { l: 46, r: 40, t: 8, b: 32 },
-    paper_bgcolor: "transparent",
-    plot_bgcolor: "transparent",
-    font: { color: "#94A3B8", size: 10, family: "Inter, sans-serif" },
+    paper_bgcolor: chart.paper,
+    plot_bgcolor: chart.paper,
+    font: { color: "#6B7280", size: 10, family: "Inter, sans-serif" },
     showlegend: false,
-    hoverlabel: { bgcolor: "#0D1D33", bordercolor: "#1E3A5F", font: { size: 10 } },
+    hoverlabel: chart.hover,
   };
 
   return (
@@ -101,27 +102,27 @@ export function OptimizationProgress({
                   type: "scatter",
                   mode: "lines",
                   name: "Temperature",
-                  line: { color: "#F59E0B", width: 2 },
+                  line: { color: chart.amber, width: 2 },
                 },
                 {
                   y: qubo.map((e) => e.transverse_field ?? 0),
                   type: "scatter",
                   mode: "lines",
                   name: "Transverse field",
-                  line: { color: "#00BFA6", width: 2 },
+                  line: { color: chart.accent, width: 2 },
                   yaxis: "y2",
                 },
               ]}
               layout={{
                 ...layoutBase,
                 xaxis: { ...axis, title: { text: "Sweep" } },
-                yaxis: { ...axis, title: { text: "T" }, color: "#F59E0B" },
+                yaxis: { ...axis, title: { text: "T" }, color: chart.amber },
                 yaxis2: {
                   ...axis,
                   title: { text: "Γ" },
                   overlaying: "y",
                   side: "right",
-                  color: "#00BFA6",
+                  color: chart.accent,
                 },
               }}
               config={{ displayModeBar: false, responsive: true }}
@@ -149,27 +150,27 @@ export function OptimizationProgress({
                   type: "scatter",
                   mode: "lines",
                   name: "Best",
-                  line: { color: "#2DE3C8", width: 2 },
+                  line: { color: chart.accent, width: 2 },
                 },
                 {
                   y: qpso.map((e) => e.swarm_diversity ?? 0),
                   type: "scatter",
                   mode: "lines",
                   name: "Diversity",
-                  line: { color: "#38BDF8", width: 1.5, dash: "dot" },
+                  line: { color: chart.sky, width: 1.5, dash: "dot" },
                   yaxis: "y2",
                 },
               ]}
               layout={{
                 ...layoutBase,
                 xaxis: { ...axis, title: { text: "Iteration" } },
-                yaxis: { ...axis, title: { text: "Objective" }, color: "#2DE3C8" },
+                yaxis: { ...axis, title: { text: "Objective" }, color: chart.accent },
                 yaxis2: {
                   ...axis,
                   title: { text: "Spread" },
                   overlaying: "y",
                   side: "right",
-                  color: "#38BDF8",
+                  color: chart.sky,
                 },
               }}
               config={{ displayModeBar: false, responsive: true }}

@@ -81,9 +81,9 @@ export function CIIRail({
           className="absolute top-0 bottom-0 flex items-center"
           style={{ left: `${markerPct}%`, transform: "translateX(-50%)" }}
         >
-          <div className="w-1 h-full bg-ink-950" />
+          <div className="w-1 h-full bg-white" />
           <div
-            className="absolute w-2.5 h-2.5 rounded-full border-2 border-ink-950"
+            className="absolute w-2.5 h-2.5 rounded-full border-2 border-white"
             style={{ backgroundColor: CII_COLORS[rating] }}
           />
         </div>
@@ -104,14 +104,14 @@ export function CIIRail({
 
 /** The rating letter as a compact badge, for tables and dense lists. */
 export function CIIBadge({ rating, size = "md" }: { rating: CIIRating; size?: "sm" | "md" }) {
-  const dimensions = size === "sm" ? "w-5 h-5 text-2xs" : "w-7 h-7 text-sm";
+  const dimensions = size === "sm" ? "w-6 h-6 text-2xs" : "w-8 h-8 text-sm";
   return (
     <span
-      className={`${dimensions} inline-flex items-center justify-center rounded-sm font-mono font-bold shrink-0`}
+      className={`${dimensions} inline-flex items-center justify-center rounded-[7px] font-semibold shrink-0`}
       style={{
-        backgroundColor: `${CII_COLORS[rating]}22`,
+        backgroundColor: `${CII_COLORS[rating]}1A`,
         color: CII_COLORS[rating],
-        border: `1px solid ${CII_COLORS[rating]}55`,
+        border: `1px solid ${CII_COLORS[rating]}33`,
       }}
       title={`CII rating ${rating}`}
     >

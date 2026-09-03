@@ -1,3 +1,4 @@
+import { chart } from "../../utils/chartTheme";
 import Plot from "react-plotly.js";
 import type { ParetoSolution } from "../../types";
 import { CII_COLORS } from "../../utils/constants";
@@ -51,7 +52,7 @@ export function ParetoFront({ solutions, dominated, selectedId, onSelect }: Pare
                 type: "scatter" as const,
                 mode: "markers" as const,
                 name: "Dominated",
-                marker: { size: 7, color: "#334155", symbol: "circle-open", line: { width: 1.5 } },
+                marker: { size: 7, color: chart.muted, symbol: "circle-open", line: { width: 1.5 } },
                 hovertemplate: "Dominated plan<br>%{x:$,.0f} · %{y:.0f} t<extra></extra>",
               },
             ]
@@ -62,7 +63,7 @@ export function ParetoFront({ solutions, dominated, selectedId, onSelect }: Pare
           type: "scatter" as const,
           mode: "lines" as const,
           name: "Frontier",
-          line: { color: "#00BFA6", width: 1.5, dash: "dot" },
+          line: { color: chart.accent, width: 1.5, dash: "dot" },
           hoverinfo: "skip" as const,
         },
         {
@@ -73,13 +74,13 @@ export function ParetoFront({ solutions, dominated, selectedId, onSelect }: Pare
           name: "Pareto-optimal",
           text: solutions.map((s) => s.solution_id),
           textposition: "top center" as const,
-          textfont: { size: 9, color: "#64748B" },
+          textfont: { size: 9, color: chart.mutedDark },
           marker: {
             size: solutions.map((s) => (s.solution_id === selectedId ? 17 : 12)),
             color: solutions.map((s) => CII_COLORS[worstRating(s) as keyof typeof CII_COLORS]),
             line: {
               width: solutions.map((s) => (s.solution_id === selectedId ? 3 : 1.5)),
-              color: solutions.map((s) => (s.solution_id === selectedId ? "#2DE3C8" : "#0A1628")),
+              color: solutions.map((s) => (s.solution_id === selectedId ? chart.accent : "#FFFFFF")),
             },
           },
           customdata: solutions.map((s) => s.solution_id),
@@ -91,13 +92,13 @@ export function ParetoFront({ solutions, dominated, selectedId, onSelect }: Pare
         autosize: true,
         height: 400,
         margin: { l: 68, r: 18, t: 14, b: 52 },
-        paper_bgcolor: "transparent",
-        plot_bgcolor: "transparent",
-        font: { color: "#94A3B8", size: 11, family: "Inter, sans-serif" },
+        paper_bgcolor: chart.paper,
+        plot_bgcolor: chart.paper,
+        font: { color: "#6B7280", size: 11, family: "Inter, sans-serif" },
         xaxis: {
           title: { text: "Fuel cost (USD)", font: { size: 11 } },
-          gridcolor: "#12263F",
-          zerolinecolor: "#1E3A5F",
+          gridcolor: chart.grid,
+          zerolinecolor: chart.zero,
           // SI-suffixed ticks collapse distinct values onto the same label
           // ("$1M, $1M, $1M") once the front spans a narrow range at the top
           // end. Three significant figures keeps every tick distinguishable.
@@ -105,11 +106,11 @@ export function ParetoFront({ solutions, dominated, selectedId, onSelect }: Pare
         },
         yaxis: {
           title: { text: "Well-to-Wake emissions (t CO₂e)", font: { size: 11 } },
-          gridcolor: "#12263F",
-          zerolinecolor: "#1E3A5F",
+          gridcolor: chart.grid,
+          zerolinecolor: chart.zero,
         },
         legend: { orientation: "h", y: -0.19, font: { size: 10 } },
-        hoverlabel: { bgcolor: "#0D1D33", bordercolor: "#1E3A5F", font: { size: 11 }, align: "left" },
+        hoverlabel: { ...chart.hover, align: "left" },
       }}
       config={{ displayModeBar: false, responsive: true }}
       style={{ width: "100%" }}

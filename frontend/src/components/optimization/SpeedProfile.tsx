@@ -1,3 +1,4 @@
+import { chart } from "../../utils/chartTheme";
 import Plot from "react-plotly.js";
 import type { SpeedProfileLeg } from "../../types";
 
@@ -17,7 +18,7 @@ export function SpeedProfile({ legs }: { legs: SpeedProfileLeg[] }) {
     cumulative.push(running);
   }
 
-  const axis = { gridcolor: "#12263F", zerolinecolor: "#1E3A5F", tickfont: { size: 10 } };
+  const axis = { gridcolor: chart.grid, zerolinecolor: chart.zero, tickfont: { size: 10 } };
 
   return (
     <Plot
@@ -29,8 +30,8 @@ export function SpeedProfile({ legs }: { legs: SpeedProfileLeg[] }) {
           mode: "lines",
           name: "Wave height",
           fill: "tozeroy",
-          fillcolor: "rgba(56,189,248,0.13)",
-          line: { color: "#38BDF8", width: 1, shape: "hv" },
+          fillcolor: "rgba(14,165,233,0.14)",
+          line: { color: chart.sky, width: 1, shape: "hv" },
           yaxis: "y2",
           hovertemplate: "%{y:.1f} m<extra>Sea state</extra>",
         },
@@ -40,8 +41,8 @@ export function SpeedProfile({ legs }: { legs: SpeedProfileLeg[] }) {
           type: "scatter",
           mode: "lines+markers",
           name: "Speed",
-          line: { color: "#00BFA6", width: 2.5, shape: "hv" },
-          marker: { size: 5, color: "#2DE3C8" },
+          line: { color: chart.accent, width: 2.5, shape: "hv" },
+          marker: { size: 5, color: chart.accent },
           text: legs.map(
             (leg) =>
               `${leg.from} → ${leg.to}<br>${leg.speed_kn.toFixed(1)} kn · ${(leg.shaft_power_kw / 1000).toFixed(1)} MW<br>Engine at ${leg.engine_load_pct.toFixed(0)}% MCR`,
@@ -53,21 +54,21 @@ export function SpeedProfile({ legs }: { legs: SpeedProfileLeg[] }) {
         autosize: true,
         height: 250,
         margin: { l: 52, r: 48, t: 10, b: 42 },
-        paper_bgcolor: "transparent",
-        plot_bgcolor: "transparent",
-        font: { color: "#94A3B8", size: 11, family: "Inter, sans-serif" },
+        paper_bgcolor: chart.paper,
+        plot_bgcolor: chart.paper,
+        font: { color: "#6B7280", size: 11, family: "Inter, sans-serif" },
         xaxis: { ...axis, title: { text: "Distance along route (nm)", font: { size: 11 } } },
-        yaxis: { ...axis, title: { text: "Speed (kn)", font: { size: 11 } }, color: "#00BFA6" },
+        yaxis: { ...axis, title: { text: "Speed (kn)", font: { size: 11 } }, color: chart.accent },
         yaxis2: {
           ...axis,
           title: { text: "Wave (m)", font: { size: 11 } },
           overlaying: "y",
           side: "right",
-          color: "#38BDF8",
+          color: chart.sky,
           rangemode: "tozero",
         },
         legend: { orientation: "h", y: -0.26, font: { size: 10 } },
-        hoverlabel: { bgcolor: "#0D1D33", bordercolor: "#1E3A5F", font: { size: 11 }, align: "left" },
+        hoverlabel: { ...chart.hover, align: "left" },
       }}
       config={{ displayModeBar: false, responsive: true }}
       style={{ width: "100%" }}
