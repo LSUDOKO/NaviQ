@@ -14,8 +14,13 @@ import type {
   Vessel,
 } from "../types";
 
+// In local dev, Vite proxies "/api" to the backend on :8000, so a relative
+// base URL works with no configuration. In production (Cloudflare Pages),
+// there is no proxy: VITE_API_URL must point at the deployed backend origin.
+const API_ORIGIN = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
+
 const client = axios.create({
-  baseURL: "/api/v1",
+  baseURL: `${API_ORIGIN}/api/v1`,
   timeout: 180_000,
   headers: { "Content-Type": "application/json" },
 });

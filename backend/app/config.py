@@ -24,6 +24,14 @@ class Settings(BaseSettings):
         "http://127.0.0.1:5173", "http://localhost:3000",
         "http://localhost:4173",
     ]
+    # Comma-separated extra origins from the environment, so a production
+    # frontend domain can be added without a code change or rebuild.
+    extra_cors_origins: str = ""
+
+    @property
+    def all_cors_origins(self) -> list[str]:
+        extra = [o.strip() for o in self.extra_cors_origins.split(",") if o.strip()]
+        return [*self.cors_origins, *extra]
 
     # Optimiser defaults, tuned so an interactive run finishes in seconds.
     qubo_steps: int = 180

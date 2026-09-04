@@ -40,8 +40,20 @@ export function useOptimizationSocket(taskId: string | null): UseOptimizationSoc
     setError(null);
     setStatus("connecting");
 
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const url = `${protocol}//${window.location.host}/ws/optimization/${taskId}`;
+    // In local dev, no VITE_API_URL is set, so the socket falls back to the
+    // current origin, which Vite proxies to the backend (see vite.config.ts).
+    // In production, VITE_API_URL points at the deployed backend and its
+    // scheme/host stand in for the page's own.
+    const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
+    let url: string;
+    if (apiUrl) {
+      const parsed = new URL(apiUrl);
+      const wsProtocol = parsed.protocol === "https:" ? "wss:" : "ws:";
+      url = `${wsProtocol}//${parsed.host}/ws/optimization/${taskId}`;
+    } else {
+      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      url = `${protocol}//${window.location.host}/ws/optimization/${taskId}`;
+    }
     const socket = new WebSocket(url);
     socketRef.current = socket;
 
