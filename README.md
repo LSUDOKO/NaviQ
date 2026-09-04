@@ -16,6 +16,12 @@
 
 **Smart India Hackathon 2026** · Problem statement `SIH26138` · Clean &amp; Green Technology
 
+### 🔴 [Live demo — naviq.pages.dev](https://naviq.pages.dev)
+
+Frontend on Cloudflare Pages, backend (FastAPI + PyTorch + the QUBO/QPSO solvers) on Render.
+The free-tier backend sleeps after inactivity — the first request after a while can take
+15-30s to wake it; everything after that runs at normal speed.
+
 </div>
 
 ---
@@ -249,6 +255,20 @@ Vessel particulars, the attained intensity on a full A–E rail, and the **speed
 </table>
 
 ---
+
+## Deployed architecture
+
+```
+Cloudflare Pages (naviq.pages.dev)          Render (naviq-backend.onrender.com)
+  React SPA, static build                     FastAPI + PyTorch + solvers
+  VITE_API_URL baked in at build time  ─────▶  Dockerfile build, free web service
+  wrangler pages deploy                        WebSocket + REST, CORS-scoped to Pages
+```
+
+Cloudflare Containers (the natural way to run this Docker image on Cloudflare
+directly) require the Workers **Paid** plan; this account is on the free plan.
+Frontend static hosting has no such gate, so the split above keeps the whole
+stack on free tiers: Pages for the SPA, Render for the Python backend.
 
 ## Running it
 
