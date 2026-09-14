@@ -1,7 +1,7 @@
 from .optimization import (
+    ObjectiveWeights,
     OptimizationRequest,
     OptimizationStatus,
-    ObjectiveWeights,
 )
 from .prediction import (
     FuelComparisonRequest,
@@ -12,8 +12,16 @@ from .vessel import VesselCreate, VesselOut, VesselUpdate
 from .voyage import RouteOut, VoyageCreate, VoyageOut
 
 __all__ = [
-    "VesselCreate", "VesselOut", "VesselUpdate",
-    "RouteOut", "VoyageCreate", "VoyageOut",
-    "PredictionRequest", "WeatherCondition", "FuelComparisonRequest",
-    "OptimizationRequest", "OptimizationStatus", "ObjectiveWeights",
+    "FuelComparisonRequest",
+    "ObjectiveWeights",
+    "OptimizationRequest",
+    "OptimizationStatus",
+    "PredictionRequest",
+    "RouteOut",
+    "VesselCreate",
+    "VesselOut",
+    "VesselUpdate",
+    "VoyageCreate",
+    "VoyageOut",
+    "WeatherCondition",
 ]

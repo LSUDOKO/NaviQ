@@ -54,6 +54,7 @@ class FuelPredictor:
             return
         try:
             import torch
+
             from .model import FuelPredictionNet
 
             checkpoint = torch.load(WEIGHTS_PATH, map_location="cpu", weights_only=False)

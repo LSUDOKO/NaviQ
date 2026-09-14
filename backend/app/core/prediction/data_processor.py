@@ -27,7 +27,7 @@ class FeatureScaler:
         self.mean = mean
         self.std = std
 
-    def fit(self, X: np.ndarray) -> "FeatureScaler":
+    def fit(self, X: np.ndarray) -> FeatureScaler:
         flat = X.reshape(-1, X.shape[-1])
         self.mean = flat.mean(axis=0)
         self.std = flat.std(axis=0)
@@ -49,7 +49,7 @@ class FeatureScaler:
         }
 
     @classmethod
-    def from_dict(cls, payload: dict) -> "FeatureScaler":
+    def from_dict(cls, payload: dict) -> FeatureScaler:
         mean = None if payload.get("mean") is None else np.array(payload["mean"])
         std = None if payload.get("std") is None else np.array(payload["std"])
         return cls(mean, std)
@@ -130,8 +130,8 @@ def generate_training_data(vessels: list[dict], n_voyages: int = 400,
 
     Returns (X, y, energy) where y is fuel rate in kg/h.
     """
-    from ..physics.propulsion import compute_propulsion
     from ..physics.fuel_conversion import get_fuel
+    from ..physics.propulsion import compute_propulsion
 
     rng = np.random.default_rng(seed)
     X_list, y_list, e_list = [], [], []

@@ -27,7 +27,7 @@ Kitamura et al. (2017) added wave resistance regression for full-form hulls.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 
 # Physical constants (seawater at 15 degC, standard atmosphere)
 RHO_SEAWATER = 1025.0   # kg/m3

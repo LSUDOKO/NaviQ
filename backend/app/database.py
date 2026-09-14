@@ -41,9 +41,9 @@ def load_json(name: str) -> dict:
 
 def init_db() -> None:
     """Create tables and seed the demo fleet, routes and ports if empty."""
-    from .models import Port, Route, Vessel  # noqa: F401  (registers metadata)
+    from .models import Port, Route, Vessel
 
-    Base.metadata.create_all(bind=engine)
+    # Base.metadata.create_all(bind=engine) # Handled by Alembic now
 
     with SessionLocal() as db:
         if db.query(Vessel).count() == 0:

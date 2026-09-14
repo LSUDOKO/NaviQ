@@ -30,8 +30,8 @@ Sun, Fang, Wu, Palade & Xu (2012) "Quantum-behaved particle swarm optimization:
 from __future__ import annotations
 
 import math
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Callable
 
 import numpy as np
 

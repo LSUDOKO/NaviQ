@@ -146,7 +146,7 @@ class TaskRegistry:
                 "n_pareto_optimal": result.get("n_pareto_optimal", 0),
             }, loop)
             self._persist(task_id, task, request, result)
-        except Exception as exc:  # noqa: BLE001 - surfaced to the client
+        except Exception as exc:
             task["status"] = "failed"
             task["error"] = f"{type(exc).__name__}: {exc}"
             task["message"] = "Optimisation failed"

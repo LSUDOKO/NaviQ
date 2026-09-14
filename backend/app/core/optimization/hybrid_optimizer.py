@@ -20,7 +20,7 @@ non-dominated results traces the Pareto front.
 from __future__ import annotations
 
 import time
-from typing import Callable
+from collections.abc import Callable
 
 import numpy as np
 
