@@ -1,0 +1,10 @@
+[lint]
+ignore = [
+    "B008",    # do not perform function call in argument defaults (FastAPI Depends)
+    "BLE001",  # do not catch blind exception
+    "S110",    # try-except-pass
+    "F841",    # local variable assigned but never used
+    "B023",    # loop variable not bound
+    "RUF034",  # useless if-else
+    "F401",    # imported but unused
+]

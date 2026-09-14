@@ -8,5 +8,12 @@ from . import (
     voyages,
 )
 
-__all__ = ["vessels", "voyages", "prediction", "optimization",
-           "compliance", "fuel_comparison", "dashboard"]
+__all__ = [
+    "compliance",
+    "dashboard",
+    "fuel_comparison",
+    "optimization",
+    "prediction",
+    "vessels",
+    "voyages",
+]

@@ -13,7 +13,7 @@ inside the optimizer as a constraint rather than in a report afterwards.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 
 from ..physics.fuel_conversion import get_fuel
 from .imo_rules import get_ship_type, rating_boundaries, reduction_factor

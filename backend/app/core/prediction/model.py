@@ -41,7 +41,7 @@ import math
 
 try:
     import torch
-    import torch.nn as nn
+    from torch import nn
     TORCH_AVAILABLE = True
 except ImportError:  # pragma: no cover - physics predictor is the fallback
     TORCH_AVAILABLE = False
@@ -80,7 +80,7 @@ if TORCH_AVAILABLE:
             # Learned per-head decay rate: some heads attend locally, others globally.
             self.gamma = nn.Parameter(torch.full((n_heads,), gamma_init))
 
-        def forward(self, x: "torch.Tensor", timestamps: "torch.Tensor | None" = None):
+        def forward(self, x: torch.Tensor, timestamps: torch.Tensor | None = None):
             B, T, D = x.shape
             H, Hd = self.n_heads, self.head_dim
 
@@ -138,7 +138,7 @@ if TORCH_AVAILABLE:
                 nn.Dropout(dropout), nn.Linear(hidden, 1),
             )
 
-        def forward(self, x: "torch.Tensor", timestamps: "torch.Tensor | None" = None):
+        def forward(self, x: torch.Tensor, timestamps: torch.Tensor | None = None):
             h = self.embedding(x)
             h, _ = self.lstm(h)
             attended, attn_weights = self.attention(h, timestamps)
@@ -161,8 +161,8 @@ if TORCH_AVAILABLE:
                     module.train()
 
         @torch.no_grad()
-        def predict_with_uncertainty(self, x: "torch.Tensor", n_samples: int = 40,
-                                     timestamps: "torch.Tensor | None" = None) -> dict:
+        def predict_with_uncertainty(self, x: torch.Tensor, n_samples: int = 40,
+                                     timestamps: torch.Tensor | None = None) -> dict:
             """MC-Dropout inference returning decomposed uncertainty."""
             self.enable_mc_dropout()
             means, variances = [], []

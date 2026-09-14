@@ -11,10 +11,12 @@ from app.core.optimization.constraints import (
     non_dominated_sort,
     pareto_front,
 )
-from app.core.optimization.objectives import generate_weight_vectors, normalize_objectives
+from app.core.optimization.objectives import (
+    generate_weight_vectors,
+    normalize_objectives,
+)
 from app.core.optimization.qpso_solver import QPSO
 from app.core.optimization.qubo_solver import QUBOProblem, SimulatedQuantumAnnealer
-
 
 # --- QUBO / Simulated Quantum Annealing ------------------------------------
 

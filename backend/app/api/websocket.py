@@ -84,7 +84,7 @@ async def optimization_progress(websocket: WebSocket, task_id: str):
             })
     except WebSocketDisconnect:
         pass
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         try:
             await websocket.send_json({"type": "error", "message": str(exc)})
         except Exception:

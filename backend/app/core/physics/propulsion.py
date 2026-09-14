@@ -14,7 +14,7 @@ and engine load-dependent efficiency are applied on top.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 
 from .resistance import KNOTS_TO_MS, ResistanceBreakdown, compute_resistance
 

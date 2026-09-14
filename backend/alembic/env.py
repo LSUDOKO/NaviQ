@@ -1,7 +1,6 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 
@@ -18,11 +17,12 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.database import Base
-from app.config import settings
 import app.models  # Ensure models are loaded
+from app.config import settings
+from app.database import Base
 
 target_metadata = Base.metadata
 
