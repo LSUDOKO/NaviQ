@@ -29,7 +29,7 @@ const MORE: NavItem[] = [
 
 function Item({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
   return (
-    <NavLink to={item.to} end={item.to === "/"} onClick={onNavigate}
+    <NavLink id={`tour-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`} to={item.to} end={item.to === "/"} onClick={onNavigate}
       className={({ isActive }) => ["group flex items-center gap-3 mx-3 px-3 py-[9px] rounded-[10px] text-[13.5px] font-medium transition-colors",
         isActive ? "bg-ink-800/70 text-txt-primary" : "text-txt-secondary hover:bg-ink-850 hover:text-txt-primary"].join(" ")}>
       {({ isActive }) => (<>
@@ -46,7 +46,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const mape = model.data?.metrics?.final_val_mape_pct;
 
   return (
-    <nav className="h-full flex flex-col bg-ink-900 border-r border-ink-line" aria-label="Main">
+    <nav id="tour-sidebar" className="h-full flex flex-col bg-ink-900 border-r border-ink-line" aria-label="Main">
       <div className="flex items-center gap-2.5 px-6 pt-6 pb-5">
         <span className="w-8 h-8 rounded-[9px] bg-signal text-white flex items-center justify-center shadow-[0_1px_2px_rgba(37,99,235,0.35)]" aria-hidden="true">
           <svg viewBox="0 0 20 20" className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M3 13h14l-1.6 3H4.6zM5 13V8.5h10V13M10 8.5V4"/></svg>
@@ -61,7 +61,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       <ul className="space-y-0.5">
         {MORE.map((it) => <li key={it.to}><Item item={it} onNavigate={onNavigate} /></li>)}
         <li>
-          <a href="/docs" target="_blank" rel="noreferrer"
+          <a id="tour-nav-api-docs" href="/docs" target="_blank" rel="noreferrer"
              className="group flex items-center gap-3 mx-3 px-3 py-[9px] rounded-[10px] text-[13.5px] font-medium text-txt-secondary hover:bg-ink-850 hover:text-txt-primary transition-colors">
             <span className="text-txt-tertiary group-hover:text-txt-primary">{I.doc}</span>API reference
           </a>
@@ -70,7 +70,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
       <div className="flex-1" />
 
-      <div className="mx-4 mb-4 rounded-card bg-ink-850 border border-ink-line p-4">
+      <div id="tour-telemetry" className="mx-4 mb-4 rounded-card bg-ink-850 border border-ink-line p-4">
         <div className="flex items-center gap-2 mb-1">
           <span className="w-1.5 h-1.5 rounded-full bg-good" aria-hidden="true" />
           <p className="text-sm font-semibold text-txt-primary">{model.data?.mode === "neural" ? "Neural model live" : "Physics model live"}</p>

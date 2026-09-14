@@ -22,6 +22,11 @@ export function AboutPage() {
     [],
   );
 
+  const restartTour = () => {
+    localStorage.removeItem("naviq_onboarding_completed");
+    window.location.href = "/";
+  };
+
   if (about.loading) return <LoadingSpinner label="Loading" />;
   if (!about.data) return null;
 
@@ -47,6 +52,15 @@ export function AboutPage() {
             </div>
           ))}
         </dl>
+
+        <div className="mt-5 pt-4 border-t border-ink-700/70 flex justify-start">
+          <button onClick={restartTour} className="btn btn-ghost text-sm">
+            <svg viewBox="0 0 20 20" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3.5 10a6.5 6.5 0 1 0 1-3.5M3.5 3v3.5H7"/>
+            </svg>
+            Restart platform tour
+          </button>
+        </div>
       </Panel>
 
       <Panel title="What makes this different" subtitle="Seven things no existing platform combines">
