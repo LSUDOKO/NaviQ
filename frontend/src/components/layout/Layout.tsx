@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import Onboarding from "../common/Onboarding";
 
 const PAGE_META: Record<string, { title: string; description: string }> = {
   "/": {
@@ -67,6 +68,7 @@ export function Layout() {
           <Outlet />
         </main>
       </div>
+      <Onboarding />
     </div>
   );
 }

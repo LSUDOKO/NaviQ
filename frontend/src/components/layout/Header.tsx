@@ -12,6 +12,11 @@ export function Header({ title, onMenuClick }: HeaderProps) {
     return () => { cancelled = true; window.clearInterval(t); };
   }, []);
 
+  const startTour = () => {
+    localStorage.removeItem("naviq_onboarding_completed");
+    window.location.href = "/";
+  };
+
   return (
     <header className="sticky top-0 z-30 bg-ink-900 border-b border-ink-line">
       <div className="flex items-center gap-4 px-5 sm:px-7 h-[60px]">
@@ -30,6 +35,10 @@ export function Header({ title, onMenuClick }: HeaderProps) {
 
         <div className="flex items-center gap-1.5 shrink-0">
           {offline && <span className="pill pill-bad mr-1">Backend offline</span>}
+          <button type="button" onClick={startTour} title="Start platform tour" className="hidden sm:flex items-center gap-2 px-3 h-9 rounded-full border border-ink-line text-[13px] font-medium text-txt-secondary hover:bg-ink-850 hover:text-txt-primary transition-colors">
+            <svg viewBox="0 0 20 20" className="w-[15px] h-[15px]" {...s}><path d="M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM12.5 7.5l-4 1.5-1.5 4 4-1.5 1.5-4z"/><circle cx="10" cy="10" r="1" fill="currentColor" stroke="none"/></svg>
+            Take tour
+          </button>
           <a href="/docs" target="_blank" rel="noreferrer" title="API reference" className="w-9 h-9 rounded-full border border-ink-line flex items-center justify-center text-txt-secondary hover:bg-ink-850 transition-colors">
             <svg viewBox="0 0 20 20" className="w-[17px] h-[17px]" {...s}><circle cx="10" cy="10" r="7.5"/><path d="M8 8a2 2 0 1 1 3 1.7c-.7.4-1 .9-1 1.6M10 14.2v.3"/></svg>
           </a>

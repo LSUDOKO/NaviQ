@@ -43,7 +43,7 @@ export function DashboardPage() {
   const peak = bars.reduce((m, b, i) => (b.value > bars[m].value ? i : m), 0);
 
   return (
-    <div className="space-y-5">
+    <div id="tour-dashboard-main" className="space-y-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h2 className="text-[22px] font-semibold text-txt-primary tracking-[-0.02em]">Welcome back, operator</h2>
