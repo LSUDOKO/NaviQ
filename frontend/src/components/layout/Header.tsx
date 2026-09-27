@@ -36,7 +36,7 @@ export function Header({ title, onMenuClick }: HeaderProps) {
           <button type="button" title="Notifications" className="w-9 h-9 rounded-full border border-ink-line flex items-center justify-center text-txt-secondary hover:bg-ink-850 transition-colors">
             <svg viewBox="0 0 20 20" className="w-[17px] h-[17px]" {...s}><path d="M5 13.5V9a5 5 0 0 1 10 0v4.5l1.5 1.5h-13zM8.5 17a1.5 1.5 0 0 0 3 0"/></svg>
           </button>
-          <span className="ml-1 w-9 h-9 rounded-full bg-gradient-to-br from-signal to-sky-400 text-white text-xs font-semibold flex items-center justify-center" title="Fleet operator">FO</span>
+          <span className="ml-1 w-9 h-9 rounded-full bg-gradient-to-br from-signal to-sea text-white text-xs font-semibold flex items-center justify-center" title="Fleet operator">FO</span>
         </div>
       </div>
     </header>

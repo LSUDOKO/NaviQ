@@ -112,7 +112,7 @@ export function FleetMap({
             key={route.id}
             positions={positions(route.waypoints)}
             pathOptions={{
-              color: dimmed ? "#C4C9D4" : "#2563EB",
+              color: dimmed ? "#D0D3D8" : "#1775E8",
               weight: dimmed ? 1.5 : 2.5,
               opacity: dimmed ? 0.35 : 0.75,
               dashArray: dimmed ? "4 6" : undefined,

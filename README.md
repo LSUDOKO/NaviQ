@@ -295,7 +295,7 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:5173** — Vite proxies `/api` and `/ws` to port 8000.
+Open **http://localhost:5173** — the landing page is at `/`, the operations console at `/app`. Vite proxies `/api` and `/ws` to port 8000.
 
 ### Docker
 

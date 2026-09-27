@@ -25,7 +25,7 @@ export function FleetGauge({ vessels, compliantPct }: Props) {
           stroke={CII_COLORS[v.rating]} strokeWidth={sw} strokeLinecap="butt"
           strokeDasharray={`${seg} ${circumference}`} strokeDashoffset={-(i * (seg + gap))} />
       ))}
-      <text x={cx} y={cy - 16} textAnchor="middle" fontSize="30" fontWeight="600" fill="#111827" letterSpacing="-0.02em">{compliantPct}%</text>
+      <text x={cx} y={cy - 16} textAnchor="middle" fontSize="30" fontWeight="600" fill="#0B0D0F" letterSpacing="-0.02em">{compliantPct}%</text>
       <text x={cx} y={cy + 4} textAnchor="middle" fontSize="10.5" fill="#6B7280">Within CII limits</text>
     </svg>
   );

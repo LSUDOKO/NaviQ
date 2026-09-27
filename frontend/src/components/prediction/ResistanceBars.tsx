@@ -6,7 +6,7 @@ const COMPONENTS = [
     key: "friction" as const,
     field: "friction_kn" as const,
     label: "Skin friction",
-    color: "#2563EB",
+    color: "#1775E8",
     note: "Water shearing along the wetted hull. Dominant on full-form hulls at low speed, and the reason fouling costs so much.",
   },
   {

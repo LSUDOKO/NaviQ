@@ -4,27 +4,27 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 const PAGE_META: Record<string, { title: string; description: string }> = {
-  "/": {
+  "/app": {
     title: "Overview",
     description: "Carbon intensity, emissions and position across the fleet",
   },
-  "/prediction": {
+  "/app/prediction": {
     title: "Fuel prediction",
     description: "Physics-informed forecast with uncertainty, and a fuel comparison",
   },
-  "/optimization": {
+  "/app/optimization": {
     title: "Fleet optimisation",
     description: "Hybrid quantum-inspired deployment, speed and fuel planning",
   },
-  "/compliance": {
+  "/app/compliance": {
     title: "IMO CII compliance",
     description: "Attained rating, projected trajectory and corrective actions",
   },
-  "/fleet": {
+  "/app/fleet": {
     title: "Fleet register",
     description: "Vessel particulars, performance curves and fuel options",
   },
-  "/about": {
+  "/app/about": {
     title: "About NAVIQ",
     description: "Method, differentiators and references",
   },

@@ -106,7 +106,7 @@ export function DashboardPage() {
           <p className="caption-quiet px-1 pb-1">Switching the basis adds the upstream share — production, transport and bunkering — that tank-to-wake reporting leaves out.</p>
         </Panel>
 
-        <Panel title="Fleet compliance" actions={<Link to="/compliance" className="text-xs font-medium text-signal">Details</Link>} bodyClassName="px-5 pb-5">
+        <Panel title="Fleet compliance" actions={<Link to="/app/compliance" className="text-xs font-medium text-signal">Details</Link>} bodyClassName="px-5 pb-5">
           <FleetGauge vessels={vessels.map((v) => ({ id: v.id, rating: v.rating as CIIRating }))} compliantPct={compliantPct} />
           <div className="flex justify-center gap-3 -mt-1 mb-4">
             {(["A", "B", "C", "D", "E"] as CIIRating[]).map((g) => (
@@ -144,7 +144,7 @@ export function DashboardPage() {
             <svg viewBox="0 0 20 20" className="w-3.5 h-3.5" {...s}><circle cx="9" cy="9" r="5.5"/><path d="m13.5 13.5 3 3"/></svg>
             <input className="flex-1 bg-transparent outline-none text-txt-primary placeholder:text-txt-quiet" placeholder="Search" />
           </label>
-          <Link to="/fleet" className="btn btn-ghost text-xs h-8 py-0">Open register</Link>
+          <Link to="/app/fleet" className="btn btn-ghost text-xs h-8 py-0">Open register</Link>
         </>}>
         <div className="overflow-x-auto">
           <table className="data-table">
@@ -155,7 +155,7 @@ export function DashboardPage() {
             <tbody>
               {vessels.map((v) => (
                 <tr key={v.id}>
-                  <td><Link to={`/fleet?vessel=${v.id}`} className="font-medium text-txt-primary hover:text-signal">{v.name}</Link></td>
+                  <td><Link to={`/app/fleet?vessel=${v.id}`} className="font-medium text-txt-primary hover:text-signal">{v.name}</Link></td>
                   <td className="hidden md:table-cell">{SHIP_TYPE_LABELS[v.ship_type] ?? v.ship_type}</td>
                   <td className="text-right metric metric-xs hidden sm:table-cell">{int(v.dwt)}</td>
                   <td className="hidden lg:table-cell">{v.current_fuel}</td>

@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
+import LandingPage from "./pages/LandingPage";
 import AboutPage from "./pages/AboutPage";
 import CompliancePage from "./pages/CompliancePage";
 import DashboardPage from "./pages/DashboardPage";
@@ -11,7 +12,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<Layout />}>
+        <Route index element={<LandingPage />} />
+        <Route path="app" element={<Layout />}>
           <Route index element={<DashboardPage />} />
           <Route path="prediction" element={<PredictionPage />} />
           <Route path="optimization" element={<OptimizationPage />} />
@@ -20,6 +22,7 @@ export default function App() {
           <Route path="about" element={<AboutPage />} />
           <Route path="*" element={<DashboardPage />} />
         </Route>
+        <Route path="*" element={<LandingPage />} />
       </Routes>
     </Router>
   );
