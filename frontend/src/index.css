@@ -84,7 +84,7 @@
   .metric-xs   { font-size: 13px; line-height: 1.3; font-weight: 500; }
   .unit { color: var(--t4); font-weight: 400; letter-spacing: 0; }
 
-  .label-field { display: block; font-size: 12px; font-weight: 500; color: var(--t2); margin-bottom: 6px; }
+  .label, .label-field { display: block; font-size: 12px; font-weight: 500; color: var(--t2); margin-bottom: 6px; }
   .caption { font-size: 12px; line-height: 1.55; color: var(--t3); }
   .caption-quiet { font-size: 11.5px; line-height: 1.55; color: var(--t4); }
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import FormulaDisplay from "../components/common/FormulaDisplay";
 import LoadingSpinner, { EmptyState, ErrorState } from "../components/common/LoadingSpinner";
 import Panel from "../components/common/Panel";
@@ -7,7 +7,7 @@ import ParetoFront from "../components/optimization/ParetoFront";
 import SolutionDetail from "../components/optimization/SolutionDetail";
 import { useOptimization } from "../hooks/useOptimization";
 import { useAsync } from "../hooks/usePrediction";
-import api from "../services/api";
+import api, { type TaskSummary } from "../services/api";
 import type { Formula } from "../types";
 import { MONTHS, OBJECTIVE_HINTS, OBJECTIVE_LABELS } from "../utils/constants";
 import { num, pct, tonnes, usd } from "../utils/formatters";
@@ -19,6 +19,10 @@ export function OptimizationPage() {
   const routes = useAsync(() => api.listRoutes(), []);
   const formulas = useAsync<Record<string, Formula[]>>(() => api.formulas(), []);
   const optimization = useOptimization();
+  const tasks = useAsync<TaskSummary[]>(() => api.listTasks(), []);
+  const completedTasks = (tasks.data ?? []).filter((t) => t.status === "completed");
+  const [shownTask, setShownTask] = useState<string | null>(null);
+  const restored = useRef(false);
 
   const [vesselIds, setVesselIds] = useState<string[]>([]);
   const [routeIds, setRouteIds] = useState<string[]>([]);
@@ -57,6 +61,30 @@ export function OptimizationPage() {
     }
   }, [optimization.result, selectedId]);
 
+  // Returning to the page: show the most recent finished run rather than an
+  // empty state. The run is not repeated; its stored result is fetched.
+  useEffect(() => {
+    if (restored.current || !completedTasks.length || optimization.result || optimization.running) return;
+    restored.current = true;
+    setShownTask(completedTasks[0].task_id);
+    optimization.load(completedTasks[0].task_id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completedTasks.length]);
+
+  useEffect(() => {
+    if (optimization.result && optimization.taskId) {
+      setShownTask(optimization.taskId);
+      tasks.reload();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optimization.result]);
+
+  const showRun = (id: string) => {
+    setSelectedId(null);
+    setShownTask(id);
+    optimization.load(id);
+  };
+
   const toggle = (list: string[], setList: (v: string[]) => void, id: string) =>
     setList(list.includes(id) ? list.filter((x) => x !== id) : [...list, id]);
 
@@ -78,6 +106,7 @@ export function OptimizationPage() {
 
   const run = () => {
     setSelectedId(null);
+    setShownTask(null);
     optimization.run({
       vessel_ids: vesselIds,
       route_ids: routeIds,
@@ -102,7 +131,7 @@ export function OptimizationPage() {
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-5 xl:grid-cols-[330px_1fr]">
+      <div className="grid gap-5 xl:grid-cols-[330px_minmax(0,1fr)]">
         <div className="space-y-5">
           <Panel title="What to plan" subtitle="Vessels and routes to deploy">
             <fieldset className="mb-4">
@@ -186,7 +215,7 @@ export function OptimizationPage() {
               ))}
             </div>
 
-            <div className="mt-5 pt-4 border-t border-ink-700/70 space-y-4">
+            <div className="mt-5 pt-4 border-t border-ink-line space-y-4">
               <div>
                 <label className="label flex items-baseline justify-between" htmlFor="lambda">
                   <span>Risk aversion</span>
@@ -254,6 +283,22 @@ export function OptimizationPage() {
         </div>
 
         <div className="space-y-5">
+          {completedTasks.length > 0 && !optimization.running && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs text-txt-tertiary mr-1">Recent runs</span>
+              {completedTasks.slice(0, 6).map((t) => {
+                const active = t.task_id === shownTask;
+                return (
+                  <button key={t.task_id} type="button" onClick={() => showRun(t.task_id)} aria-pressed={active}
+                    className={`chip border transition-colors ${active ? "bg-txt-primary text-white border-txt-primary" : "bg-white text-txt-secondary border-ink-bright hover:border-txt-quiet"}`}>
+                    {new Date(t.created_at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}
+                    <span className={active ? "text-white/60" : "text-txt-quiet"}>· {num(t.runtime_seconds ?? 0, 0)} s</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           {(optimization.running || (result && optimization.events.length > 0)) && (
             <Panel
               title={optimization.running ? "Solving" : "How the plans were found"}

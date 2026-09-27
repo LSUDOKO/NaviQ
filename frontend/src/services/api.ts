@@ -60,6 +60,18 @@ export interface PredictionPayload {
   mc_samples?: number;
 }
 
+export interface TaskSummary {
+  task_id: string;
+  status: "queued" | "running" | "completed" | "failed";
+  progress: number;
+  phase: string;
+  message: string;
+  created_at: string;
+  completed_at: string | null;
+  runtime_seconds: number | null;
+  error: string | null;
+}
+
 export interface OptimizePayload {
   vessel_ids: string[];
   route_ids: string[];
@@ -115,7 +127,7 @@ export const api = {
         `/optimize/${taskId}`,
       )
       .then((r) => r.data),
-  listTasks: () => client.get("/optimize/tasks").then((r) => r.data),
+  listTasks: () => client.get<TaskSummary[]>("/optimize/tasks").then((r) => r.data),
 
   // -- compliance ----------------------------------------------------------
   fleetCII: (year = 2026) =>

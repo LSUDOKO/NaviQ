@@ -47,7 +47,7 @@ export function SEEMPPanel({ vessels }: { vessels: VesselEntry[] }) {
         {actionable.map((entry) => {
           const plan = entry.seemp;
           return (
-            <article key={entry.vessel_id} className="border border-ink-700/60 rounded-sm p-4">
+            <article key={entry.vessel_id} className="border border-ink-line rounded-[10px] p-4">
               <header className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
                 <div className="flex items-center gap-2.5">
                   <CIIBadge rating={entry.cii.rating} size="sm" />
@@ -94,10 +94,10 @@ export function SEEMPPanel({ vessels }: { vessels: VesselEntry[] }) {
                 {plan.recommended_measures.map((measure) => (
                   <li
                     key={measure.id}
-                    className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs border-l-2 border-signal/40 pl-3 py-0.5"
+                    className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs border-l-2 border-signal/50 pl-3 py-0.5"
                   >
                     <span className="text-txt-primary font-medium">{measure.name}</span>
-                    <span className="chip bg-ink-800 text-txt-tertiary border border-ink-700">
+                    <span className="chip bg-ink-800 text-txt-tertiary border border-ink-line">
                       {CATEGORY_LABELS[measure.category] ?? measure.category}
                     </span>
                     <span className="metric text-cii-a">−{num(measure.reduction_pct, 1)}%</span>
@@ -116,7 +116,7 @@ export function SEEMPPanel({ vessels }: { vessels: VesselEntry[] }) {
                 ))}
               </ol>
 
-              <p className="text-2xs text-txt-tertiary mt-4 pt-3 border-t border-ink-700/70 leading-relaxed">
+              <p className="text-2xs text-txt-tertiary mt-4 pt-3 border-t border-ink-line leading-relaxed">
                 {plan.statutory_note}
               </p>
             </article>

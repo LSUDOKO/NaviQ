@@ -9,6 +9,7 @@ import SEEMPPanel from "../components/compliance/SEEMPPanel";
 import { useAsync } from "../hooks/usePrediction";
 import api from "../services/api";
 import type { CIIRating, Formula } from "../types";
+import { CII_COLORS } from "../utils/constants";
 import { int, num, pct } from "../utils/formatters";
 
 interface TrajectoryPoint {
@@ -67,7 +68,21 @@ export function CompliancePage() {
 
   return (
     <div className="space-y-5">
-      <section className="grid gap-3 grid-cols-2 lg:grid-cols-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-txt-secondary">
+          Every vessel's attained intensity, rated against the IMO lines for the year selected.
+        </p>
+        <label className="btn btn-ghost text-sm relative cursor-pointer pr-8">
+          <span className="text-txt-tertiary">Compliance year</span>
+          <select aria-label="Compliance year" value={year} onChange={(e) => setYear(Number(e.target.value))}
+            className="bg-transparent outline-none font-medium text-txt-primary cursor-pointer appearance-none">
+            {Array.from({ length: 8 }, (_, i) => 2025 + i).map((y) => <option key={y} value={y}>{y}</option>)}
+          </select>
+          <svg viewBox="0 0 20 20" className="w-3.5 h-3.5 text-txt-quiet absolute right-3 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m6 8 4 4 4-4" /></svg>
+        </label>
+      </div>
+
+      <section className="grid gap-3 grid-cols-2 lg:grid-cols-5">
         {[
           {
             label: "Fleet carbon intensity",
@@ -102,6 +117,20 @@ export function CompliancePage() {
             <p className="text-2xs text-txt-quiet mt-1.5">{stat.hint}</p>
           </div>
         ))}
+        <div className="panel px-4 py-3.5 col-span-2 lg:col-span-1">
+          <p className="text-xs text-txt-tertiary mb-2">Rating spread</p>
+          <div className="flex h-8 rounded-[8px] overflow-hidden gap-px" role="img" aria-label="Vessels per rating">
+            {(["A", "B", "C", "D", "E"] as CIIRating[]).map((g) => {
+              const n = data.rating_distribution[g] ?? 0;
+              return n ? (
+                <span key={g} className="flex items-center justify-center text-2xs font-semibold text-white" style={{ flex: n, background: CII_COLORS[g] }} title={`${n} rated ${g}`}>
+                  {g}&thinsp;{n}
+                </span>
+              ) : null;
+            })}
+          </div>
+          <p className="text-2xs text-txt-quiet mt-1.5">{data.n_compliant} of {data.n_compliant + data.n_non_compliant} rated C or better</p>
+        </div>
       </section>
 
       <div className="grid gap-5 lg:grid-cols-3">
@@ -143,7 +172,7 @@ export function CompliancePage() {
               </div>
             ))}
           </div>
-          <p className="text-2xs text-txt-quiet leading-relaxed mt-5 pt-4 border-t border-ink-700/70">
+          <p className="text-2xs text-txt-quiet leading-relaxed mt-5 pt-4 border-t border-ink-line">
             The pale vertical line on each rail is the required intensity for {year}. The
             percentage is headroom to the C boundary — the point where a rating becomes a
             regulatory problem rather than a performance one.
@@ -152,20 +181,6 @@ export function CompliancePage() {
 
         <Panel title="What if" subtitle="Test a policy or an operational change">
           <div className="space-y-4">
-            <div>
-              <label className="label" htmlFor="year">Compliance year</label>
-              <select
-                id="year"
-                className="field"
-                value={year}
-                onChange={(e) => setYear(Number(e.target.value))}
-              >
-                {Array.from({ length: 8 }, (_, i) => 2025 + i).map((y) => (
-                  <option key={y} value={y}>{y}</option>
-                ))}
-              </select>
-            </div>
-
             <div>
               <label className="label flex items-baseline justify-between" htmlFor="z">
                 <span>Reduction factor</span>
@@ -229,7 +244,7 @@ export function CompliancePage() {
             </button>
 
             {scenario && (
-              <div className="pt-4 border-t border-ink-700/70 space-y-2.5">
+              <div className="pt-4 border-t border-ink-line space-y-2.5">
                 {(scenario.results as Array<Record<string, never>>).map((entry) => {
                   const record = entry as unknown as {
                     vessel_id: string;

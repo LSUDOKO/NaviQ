@@ -45,7 +45,7 @@ export function ResistanceBars({ breakdown }: { breakdown: ResistanceBreakdown }
       </div>
 
       {/* One stacked rail: proportions are the point, not four separate bars. */}
-      <div className="h-3 rounded-sm overflow-hidden flex mb-5">
+      <div className="h-3 rounded-[10px] overflow-hidden flex mb-5">
         {COMPONENTS.map((component) => {
           const value = Math.max(breakdown[component.field], 0);
           const share = (value / total) * 100;
@@ -68,7 +68,7 @@ export function ResistanceBars({ breakdown }: { breakdown: ResistanceBreakdown }
             <div key={component.key}>
               <div className="flex items-baseline gap-2.5">
                 <span
-                  className="w-2 h-2 rounded-sm shrink-0"
+                  className="w-2 h-2 rounded-[10px] shrink-0"
                   style={{ backgroundColor: component.color }}
                   aria-hidden="true"
                 />
@@ -87,7 +87,7 @@ export function ResistanceBars({ breakdown }: { breakdown: ResistanceBreakdown }
       </dl>
 
       {breakdown.wind_kn < 0 && (
-        <p className="mt-4 pt-3 border-t border-ink-700/70 text-2xs text-cii-a leading-relaxed">
+        <p className="mt-4 pt-3 border-t border-ink-line text-2xs text-cii-a leading-relaxed">
           Wind resistance is negative on this voyage: a following wind is producing thrust rather
           than drag, and the fuel figure already accounts for it.
         </p>

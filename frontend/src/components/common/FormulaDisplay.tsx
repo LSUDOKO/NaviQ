@@ -48,7 +48,7 @@ export function FormulaDisplay({
       {open && (
         <div className="p-4 grid gap-4 md:grid-cols-2">
           {formulas.map((formula) => (
-            <div key={formula.name} className="border border-ink-700/60 rounded-sm p-3">
+            <div key={formula.name} className="border border-ink-line rounded-[10px] p-3">
               <p className="text-sm font-medium text-txt-primary mb-1">{formula.name}</p>
               <div className="text-signal-bright">
                 <Rendered latex={formula.latex} />

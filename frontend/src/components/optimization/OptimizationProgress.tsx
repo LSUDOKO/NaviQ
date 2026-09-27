@@ -52,7 +52,7 @@ export function OptimizationProgress({
           <span className="text-xs text-txt-secondary">{message || "Working"}</span>
           <span className="metric text-xs text-signal">{pct(progress * 100, 0)}</span>
         </div>
-        <div className="h-1.5 bg-ink-800 rounded-sm overflow-hidden">
+        <div className="h-1.5 bg-ink-800 rounded-[10px] overflow-hidden">
           <div
             className="h-full bg-signal transition-all duration-300"
             style={{ width: `${Math.max(2, progress * 100)}%` }}
@@ -83,7 +83,7 @@ export function OptimizationProgress({
             hint: "spread of particles",
           },
         ].map((stat) => (
-          <div key={stat.label} className="border border-ink-700/60 rounded-sm px-3 py-2">
+          <div key={stat.label} className="border border-ink-line rounded-[10px] px-3 py-2">
             <p className="text-2xs text-txt-tertiary">{stat.label}</p>
             <p className="metric text-base text-txt-primary mt-0.5">{stat.value}</p>
             <p className="text-2xs text-txt-quiet">{stat.hint}</p>

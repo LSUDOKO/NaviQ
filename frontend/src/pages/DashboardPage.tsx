@@ -1,7 +1,10 @@
 import { useState } from "react";
 import Plot from "react-plotly.js";
 import { Link } from "react-router-dom";
+import EmissionsByFuel from "../components/dashboard/EmissionsByFuel";
 import FleetGauge from "../components/dashboard/FleetGauge";
+import RecentRuns, { type RunSummary } from "../components/dashboard/RecentRuns";
+import ShorePowerMatrix from "../components/dashboard/ShorePowerMatrix";
 import { CIIBadge, CIIRail } from "../components/common/CIIRail";
 import FleetMap from "../components/common/FleetMap";
 import LoadingSpinner, { ErrorState } from "../components/common/LoadingSpinner";
@@ -24,7 +27,10 @@ const ICONS = {
 };
 
 export function DashboardPage() {
-  const { data, loading, error, reload } = useAsync(() => api.dashboardSummary(2026), []);
+  const [year, setYear] = useState(2026);
+  const [query, setQuery] = useState("");
+  const { data, loading, error, reload } = useAsync(() => api.dashboardSummary(year), [year]);
+  const shore = useAsync(() => api.shorePowerMatrix(30), []);
   const [basis, setBasis] = useState<"funnel" | "lifecycle">("lifecycle");
 
   if (loading) return <LoadingSpinner label="Reading fleet data" />;
@@ -41,6 +47,10 @@ export function DashboardPage() {
   const lifecycleFactor = kpis.annual_ghg_wtw_tonnes / Math.max(kpis.annual_co2_tonnes, 1);
   const bars = vessels.map((v) => ({ name: v.name.replace(/^MV /, ""), value: basis === "funnel" ? v.annual_co2_t : v.annual_co2_t * lifecycleFactor }));
   const peak = bars.reduce((m, b, i) => (b.value > bars[m].value ? i : m), 0);
+  const needle = query.trim().toLowerCase();
+  const shown = needle
+    ? vessels.filter((v) => [v.name, SHIP_TYPE_LABELS[v.ship_type] ?? v.ship_type, v.current_fuel, v.rating].join(" ").toLowerCase().includes(needle))
+    : vessels;
 
   return (
     <div className="space-y-5">
@@ -50,8 +60,14 @@ export function DashboardPage() {
           <p className="text-sm text-txt-tertiary mt-0.5">{today}</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="btn btn-ghost text-sm">Compliance year 2026
-            <svg viewBox="0 0 20 20" className="w-3.5 h-3.5 text-txt-quiet" {...s}><path d="m6 8 4 4 4-4"/></svg></span>
+          <label className="btn btn-ghost text-sm relative cursor-pointer pr-8">
+            <span className="text-txt-tertiary">Compliance year</span>
+            <select aria-label="Compliance year" value={year} onChange={(e) => setYear(Number(e.target.value))}
+              className="bg-transparent outline-none font-medium text-txt-primary cursor-pointer appearance-none">
+              {Array.from({ length: 8 }, (_, i) => 2025 + i).map((y) => <option key={y} value={y}>{y}</option>)}
+            </select>
+            <svg viewBox="0 0 20 20" className="w-3.5 h-3.5 text-txt-quiet absolute right-3 pointer-events-none" {...s}><path d="m6 8 4 4 4-4"/></svg>
+          </label>
           <a className="btn btn-ghost text-sm" href="/api/v1/dashboard/summary" target="_blank" rel="noreferrer">
             <svg viewBox="0 0 20 20" className="w-3.5 h-3.5" {...s}><path d="M10 12V3M6.5 6.5 10 3l3.5 3.5M4 12v4h12v-4"/></svg>Export</a>
         </div>
@@ -111,7 +127,7 @@ export function DashboardPage() {
           <div className="flex justify-center gap-3 -mt-1 mb-4">
             {(["A", "B", "C", "D", "E"] as CIIRating[]).map((g) => (
               <span key={g} className="flex items-center gap-1 text-2xs text-txt-tertiary">
-                <span className="w-2 h-2 rounded-sm" style={{ background: CII_COLORS[g] }} aria-hidden="true" />{g}
+                <span className="w-2 h-2 rounded-[10px]" style={{ background: CII_COLORS[g] }} aria-hidden="true" />{g}
                 <span className="text-txt-quiet">{data.cii_distribution[g] ?? 0}</span>
               </span>
             ))}
@@ -138,11 +154,26 @@ export function DashboardPage() {
         <FleetMap routes={routes} ports={ports} vessels={vessels} height="400px" />
       </Panel>
 
+      <div className="grid gap-4 xl:grid-cols-3">
+        <Panel title="Emissions by fuel" subtitle="Lifecycle GHG for each fuel the fleet burns" bodyClassName="px-5 pb-5 pt-1">
+          <EmissionsByFuel rows={data.emissions_by_fuel} />
+        </Panel>
+        <Panel title="Shore power" subtitle="Where plugging in beats the auxiliary engine" bodyClassName="px-5 pb-5 pt-1">
+          {shore.loading && <LoadingSpinner label="Evaluating ports" />}
+          {shore.error && <p className="text-xs text-bad">{shore.error}</p>}
+          {shore.data && <ShorePowerMatrix data={shore.data} />}
+        </Panel>
+        <Panel title="Recent optimisations" subtitle="Plans found this session" bodyClassName="px-5 pb-5 pt-1">
+          <RecentRuns runs={data.recent_optimizations as RunSummary[]} />
+        </Panel>
+      </div>
+
       <Panel title="Vessels" bodyClassName="p-0"
         actions={<>
           <label className="hidden sm:flex items-center gap-2 h-8 px-3 rounded-[9px] border border-ink-line text-txt-quiet text-xs w-44">
             <svg viewBox="0 0 20 20" className="w-3.5 h-3.5" {...s}><circle cx="9" cy="9" r="5.5"/><path d="m13.5 13.5 3 3"/></svg>
-            <input className="flex-1 bg-transparent outline-none text-txt-primary placeholder:text-txt-quiet" placeholder="Search" />
+            <input className="flex-1 bg-transparent outline-none text-txt-primary placeholder:text-txt-quiet" placeholder="Search"
+              value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Search vessels" />
           </label>
           <Link to="/app/fleet" className="btn btn-ghost text-xs h-8 py-0">Open register</Link>
         </>}>
@@ -153,7 +184,10 @@ export function DashboardPage() {
               <th className="hidden lg:table-cell">Fuel</th><th className="text-right">Intensity</th><th className="w-56">Rating</th><th className="text-right hidden xl:table-cell">Margin</th>
             </tr></thead>
             <tbody>
-              {vessels.map((v) => (
+              {shown.length === 0 && (
+                <tr><td colSpan={7} className="text-center text-txt-tertiary py-8">No vessel matches “{query}”.</td></tr>
+              )}
+              {shown.map((v) => (
                 <tr key={v.id}>
                   <td><Link to={`/app/fleet?vessel=${v.id}`} className="font-medium text-txt-primary hover:text-signal">{v.name}</Link></td>
                   <td className="hidden md:table-cell">{SHIP_TYPE_LABELS[v.ship_type] ?? v.ship_type}</td>

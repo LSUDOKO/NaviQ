@@ -43,7 +43,7 @@ export function SolutionDetail({ solution }: { solution: ParetoSolution }) {
           ))}
         </div>
 
-        <div className="mt-5 pt-4 border-t border-ink-700/70">
+        <div className="mt-5 pt-4 border-t border-ink-line">
           <p className="text-xs text-txt-tertiary mb-2.5">
             What this plan optimised for
           </p>
@@ -64,7 +64,7 @@ export function SolutionDetail({ solution }: { solution: ParetoSolution }) {
           </div>
         </div>
 
-        <div className="mt-4 pt-4 border-t border-ink-700/70 grid gap-3 sm:grid-cols-4 text-2xs">
+        <div className="mt-4 pt-4 border-t border-ink-line grid gap-3 sm:grid-cols-4 text-2xs">
           {[
             { label: "QUBO variables", value: int(solution.qubo.n_variables) },
             { label: "Annealing sweeps", value: int(solution.qubo.steps_run) },
@@ -83,7 +83,7 @@ export function SolutionDetail({ solution }: { solution: ParetoSolution }) {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-2xs text-txt-tertiary border-b border-ink-700/70">
+              <tr className="text-2xs text-txt-tertiary border-b border-ink-line">
                 <th className="text-left font-medium px-4 py-2.5">Vessel</th>
                 <th className="text-left font-medium px-4 py-2.5">Route</th>
                 <th className="text-left font-medium px-4 py-2.5">Fuel</th>
@@ -223,7 +223,7 @@ export function SolutionDetail({ solution }: { solution: ParetoSolution }) {
               </p>
             </div>
           </div>
-          <p className="text-2xs text-txt-tertiary leading-relaxed mt-4 pt-3 border-t border-ink-700/70">
+          <p className="text-2xs text-txt-tertiary leading-relaxed mt-4 pt-3 border-t border-ink-line">
             {voyage.shore_power.detail.rationale}
           </p>
         </Panel>

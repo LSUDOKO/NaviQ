@@ -19,7 +19,7 @@ export function FuelMatrix({ comparison }: { comparison: FuelComparison }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-2xs text-txt-tertiary border-b border-ink-700/70">
+            <tr className="text-2xs text-txt-tertiary border-b border-ink-line">
               <th className="text-left font-medium px-4 py-2.5">Fuel</th>
               <th className="text-right font-medium px-4 py-2.5">Mass</th>
               <th className="text-right font-medium px-4 py-2.5 hidden lg:table-cell">Volume</th>
@@ -43,7 +43,7 @@ export function FuelMatrix({ comparison }: { comparison: FuelComparison }) {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
                       <span
-                        className="w-2 h-2 rounded-sm shrink-0"
+                        className="w-2 h-2 rounded-[10px] shrink-0"
                         style={{ backgroundColor: FUEL_COLORS[fuel.fuel_id] ?? "#64748B" }}
                         aria-hidden="true"
                       />
@@ -64,7 +64,7 @@ export function FuelMatrix({ comparison }: { comparison: FuelComparison }) {
                         </span>
                       )}
                       {incompatible && (
-                        <span className="chip bg-ink-800 text-txt-quiet border border-ink-700">
+                        <span className="chip bg-ink-800 text-txt-quiet border border-ink-line">
                           needs retrofit
                         </span>
                       )}
@@ -87,7 +87,7 @@ export function FuelMatrix({ comparison }: { comparison: FuelComparison }) {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-ink-800 rounded-sm overflow-hidden min-w-[44px]">
+                      <div className="flex-1 h-1.5 bg-ink-800 rounded-[10px] overflow-hidden min-w-[44px]">
                         <div
                           className="h-full"
                           style={{
@@ -112,7 +112,7 @@ export function FuelMatrix({ comparison }: { comparison: FuelComparison }) {
         </table>
       </div>
 
-      <div className="px-4 py-3 border-t border-ink-700/70 space-y-2">
+      <div className="px-4 py-3 border-t border-ink-line space-y-2">
         <p className="text-2xs text-txt-tertiary leading-relaxed">
           Mass and volume differ far more than energy does. Ammonia carries less than half the
           energy per tonne of heavy fuel oil, so the same voyage needs roughly twice the bunker

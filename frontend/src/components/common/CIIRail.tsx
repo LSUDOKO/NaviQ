@@ -55,7 +55,7 @@ export function CIIRail({
 
   return (
     <div className="w-full">
-      <div className={`relative ${heights[size]} rounded-sm overflow-hidden flex`}>
+      <div className={`relative ${heights[size]} rounded-[10px] overflow-hidden flex`}>
         {bands.map((band) => (
           <div
             key={band.grade}

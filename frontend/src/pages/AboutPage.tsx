@@ -34,7 +34,7 @@ export function AboutPage() {
         <p className="text-base text-txt-secondary mb-5">{data.subtitle}</p>
         <p className="text-sm text-txt-secondary leading-relaxed max-w-2xl">{data.innovation}</p>
 
-        <dl className="grid gap-4 sm:grid-cols-4 mt-6 pt-5 border-t border-ink-700/70">
+        <dl className="grid gap-4 sm:grid-cols-4 mt-6 pt-5 border-t border-ink-line">
           {[
             ["Event", data.event],
             ["Problem statement", data.problem_statement_id],
@@ -90,7 +90,7 @@ export function AboutPage() {
               </div>
             ))}
           </div>
-          <p className="text-2xs text-txt-tertiary leading-relaxed mt-4 pt-4 border-t border-ink-700/70">
+          <p className="text-2xs text-txt-tertiary leading-relaxed mt-4 pt-4 border-t border-ink-line">
             A bidirectional LSTM with time-aware self-attention, trained under a physics-informed
             loss that penalises violations of energy conservation and cubic speed scaling.
             Uncertainty is decomposed into model ignorance, from Monte Carlo Dropout, and

@@ -7,7 +7,9 @@ import LoadingSpinner, { ErrorState } from "../components/common/LoadingSpinner"
 import Panel from "../components/common/Panel";
 import { useAsync } from "../hooks/usePrediction";
 import api, { type VesselWithCII } from "../services/api";
-import { FUEL_SHORT, SHIP_TYPE_LABELS } from "../utils/constants";
+import ShorePowerPorts from "../components/fleet/ShorePowerPorts";
+import type { CIIRating } from "../types";
+import { CII_COLORS, FUEL_SHORT, SHIP_TYPE_LABELS } from "../utils/constants";
 import { int, num, pct, power } from "../utils/formatters";
 
 interface SpeedPowerPoint {
@@ -22,6 +24,15 @@ export function FleetPage() {
   const [params, setParams] = useSearchParams();
   const fleet = useAsync(() => api.vesselsSummary(2026), []);
   const [selectedId, setSelectedId] = useState<string | null>(params.get("vessel"));
+  const shore = useAsync(() => api.shorePowerMatrix(30), []);
+
+  // The header search lands here with ?vessel=; follow it even when the page
+  // is already open.
+  useEffect(() => {
+    const wanted = params.get("vessel");
+    if (wanted && wanted !== selectedId) setSelectedId(wanted);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
 
   const detail = useAsync<{ speed_power_curve: SpeedPowerPoint[] } & VesselWithCII>(
     () => (selectedId ? api.vesselDetail(selectedId) : Promise.resolve(null as never)),
@@ -44,17 +55,28 @@ export function FleetPage() {
   const selected = vessels.find((v) => v.id === selectedId);
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[300px_1fr]">
+    <div className="grid gap-5 lg:grid-cols-[300px_minmax(0,1fr)]">
       <Panel title="Register" subtitle={`${vessels.length} vessels`} bodyClassName="p-0">
+        <div className="flex items-end gap-1.5 px-4 pb-3 border-b border-ink-line" aria-label="Rating distribution">
+          {(["A", "B", "C", "D", "E"] as CIIRating[]).map((g) => {
+            const n = vessels.filter((v) => v.rating === g).length;
+            return (
+              <span key={g} className="flex-1 flex flex-col items-center gap-1" title={`${n} rated ${g}`}>
+                <span className="w-full h-1.5 rounded-full" style={{ background: CII_COLORS[g], opacity: n ? 1 : 0.2 }} aria-hidden="true" />
+                <span className="text-2xs text-txt-tertiary">{g} <span className="text-txt-primary font-medium">{n}</span></span>
+              </span>
+            );
+          })}
+        </div>
         <ul>
           {vessels.map((vessel) => (
             <li key={vessel.id}>
               <button
                 type="button"
                 onClick={() => setSelectedId(vessel.id)}
-                className={`w-full text-left px-4 py-3 border-l-2 border-b border-b-navy-800/70 transition-colors ${
+                className={`w-full text-left px-4 py-3 border-l-2 border-b border-b-ink-line transition-colors ${
                   vessel.id === selectedId
-                    ? "border-l-teal bg-ink-850"
+                    ? "border-l-signal bg-ink-850"
                     : "border-l-transparent hover:bg-ink-850/50"
                 }`}
               >
@@ -103,7 +125,7 @@ export function FleetPage() {
                 ))}
               </div>
 
-              <div className="pt-4 border-t border-ink-700/70">
+              <div className="pt-4 border-t border-ink-line">
                 <div className="flex items-baseline justify-between mb-2">
                   <span className="text-xs text-txt-tertiary">Carbon intensity, 2026</span>
                   <span className="metric text-sm text-txt-primary">
@@ -130,7 +152,7 @@ export function FleetPage() {
             <div className="grid gap-5 lg:grid-cols-2">
               <Panel
                 title="Speed against fuel"
-                subtitle="Fuel burned per 1000 nm at each speed, in reference conditions"
+                subtitle="Fuel per 1000 nm and engine load at each speed, calm reference conditions"
               >
                 {curve.length > 0 && (
                   <Plot
@@ -162,11 +184,21 @@ export function FleetPage() {
                         marker: { size: 11, color: chart.amber, symbol: "diamond" },
                         hovertemplate: "Service speed<extra></extra>",
                       },
+                      {
+                        x: curve.map((p) => p.speed_kn),
+                        y: curve.map((p) => p.engine_load_pct),
+                        type: "scatter",
+                        mode: "lines",
+                        name: "Engine load",
+                        yaxis: "y2",
+                        line: { color: chart.mutedDark, width: 1.5, dash: "dot" },
+                        hovertemplate: "%{x:.1f} kn: %{y:.0f}% MCR<extra></extra>",
+                      },
                     ]}
                     layout={{
                       autosize: true,
                       height: 270,
-                      margin: { l: 58, r: 16, t: 10, b: 42 },
+                      margin: { l: 58, r: 56, t: 10, b: 42 },
                       paper_bgcolor: chart.paper,
                       plot_bgcolor: chart.paper,
                       font: { color: "#6B7280", size: 11, family: "Inter, sans-serif" },
@@ -174,6 +206,13 @@ export function FleetPage() {
                       yaxis: {
                         title: { text: "Tonnes per 1000 nm", font: { size: 11 } },
                         gridcolor: chart.grid,
+                      },
+                      yaxis2: {
+                        title: { text: "Engine load, % MCR", font: { size: 11 } },
+                        overlaying: "y",
+                        side: "right",
+                        range: [0, 110],
+                        showgrid: false,
                       },
                       showlegend: false,
                       hoverlabel: chart.hover,
@@ -195,17 +234,17 @@ export function FleetPage() {
                   {selected.compatible_fuels.map((fuelId) => (
                     <div
                       key={fuelId}
-                      className={`flex items-center justify-between px-3 py-2 rounded-sm border ${
+                      className={`flex items-center justify-between px-3 py-2 rounded-[10px] border ${
                         fuelId === selected.current_fuel
-                          ? "border-signal/40 bg-signal/[0.06]"
-                          : "border-ink-700/60"
+                          ? "border-signal/50 bg-signal-soft"
+                          : "border-ink-line"
                       }`}
                     >
                       <span className="text-sm text-txt-primary">
                         {FUEL_SHORT[fuelId] ?? fuelId}
                       </span>
                       {fuelId === selected.current_fuel && (
-                        <span className="chip bg-signal/12 text-signal border border-signal/30">
+                        <span className="chip bg-signal-soft text-signal border border-signal/30">
                           in use
                         </span>
                       )}
@@ -213,7 +252,7 @@ export function FleetPage() {
                   ))}
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-ink-700/70 space-y-2 text-xs">
+                <div className="mt-5 pt-4 border-t border-ink-line space-y-2 text-xs">
                   <div className="flex justify-between">
                     <span className="text-txt-tertiary">Shore power connection</span>
                     <span className={selected.shore_power_capable ? "text-cii-a" : "text-txt-tertiary"}>
@@ -239,6 +278,15 @@ export function FleetPage() {
                 </div>
               </Panel>
             </div>
+
+            <Panel title="Shore power by port" subtitle="Whether to plug in at each port on a 30 h call, decided on lifecycle emissions">
+              {shore.loading && <LoadingSpinner label="Evaluating ports" />}
+              {shore.error && <p className="text-xs text-bad">{shore.error}</p>}
+              {shore.data && (() => {
+                const entry = shore.data.vessels.find((v) => v.vessel_id === selected.id);
+                return entry ? <ShorePowerPorts ports={entry.ports} capable={entry.shore_power_capable} /> : null;
+              })()}
+            </Panel>
           </>
         )}
       </div>

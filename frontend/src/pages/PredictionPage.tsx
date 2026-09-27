@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import FleetMap from "../components/common/FleetMap";
 import FormulaDisplay from "../components/common/FormulaDisplay";
 import LoadingSpinner, { EmptyState, ErrorState } from "../components/common/LoadingSpinner";
@@ -54,6 +54,16 @@ export function PredictionPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vesselId]);
 
+  // Open populated: predict the seeded voyage once, so the page is never a
+  // blank form waiting for a click.
+  const autoRan = useRef(false);
+  useEffect(() => {
+    if (autoRan.current || !vesselId || !routeId || !fuelId) return;
+    autoRan.current = true;
+    predict({ vessel_id: vesselId, route_id: routeId, fuel_id: fuelId, speed_kn: speed, month, mc_samples: samples });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vesselId, routeId, fuelId]);
+
   const run = () => {
     if (!vesselId || !routeId) return;
     predict({ vessel_id: vesselId, route_id: routeId, fuel_id: fuelId, speed_kn: speed, month, mc_samples: samples });
@@ -72,7 +82,7 @@ export function PredictionPage() {
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-5 lg:grid-cols-[320px_1fr]">
+      <div className="grid gap-5 lg:grid-cols-[320px_minmax(0,1fr)]">
         <Panel title="Voyage" subtitle="Define what to predict">
           <div className="space-y-4">
             <div>
@@ -263,7 +273,7 @@ export function PredictionPage() {
                 </div>
 
                 {speedSaving && Math.abs(speedSaving.ratio - 1) > 0.02 && (
-                  <p className="mt-4 pt-4 border-t border-ink-700/70 text-xs text-txt-secondary leading-relaxed">
+                  <p className="mt-4 pt-4 border-t border-ink-line text-xs text-txt-secondary leading-relaxed">
                     At {num(speed, 1)} kn this voyage needs{" "}
                     <span className="metric text-txt-primary">
                       {speedSaving.faster ? `${num(1 / speedSaving.ratio, 2)}×` : `${num(1 / speedSaving.ratio, 2)}×`}

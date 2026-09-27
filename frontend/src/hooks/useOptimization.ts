@@ -78,6 +78,26 @@ export function useOptimization() {
     }
   }, []);
 
+  // Show a run that already finished, without re-solving. Used on page load
+  // so an operator returning to the page sees the last frontier, not an empty
+  // state, and by the recent-runs strip.
+  const load = useCallback(async (id: string) => {
+    stopPolling();
+    setError(null);
+    try {
+      const status = await api.getOptimization(id);
+      if (status.status === "completed" && status.result) {
+        setTaskId(null);
+        setResult(status.result);
+      } else if (status.status === "running") {
+        setResult(null);
+        setTaskId(id);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not load that run");
+    }
+  }, [stopPolling]);
+
   const reset = useCallback(() => {
     stopPolling();
     setTaskId(null);
@@ -89,6 +109,7 @@ export function useOptimization() {
 
   return {
     run,
+    load,
     reset,
     taskId,
     submitting,
